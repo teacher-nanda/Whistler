@@ -205,8 +205,12 @@ section.step{padding-block:68px 8px}
 footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:center}
 
 /* NOTES DRAWER */
+html{--dw:min(460px,45vw)}
+body{transition:padding .25s ease}
+body.notes-open{padding-right:var(--dw)}
+body.notes-open .fab{display:none}
 .fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:10px;background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:14px 22px;font-weight:700;box-shadow:0 8px 28px rgba(0,0,0,.3)}
-.drawer{position:fixed;z-index:50;top:0;right:0;bottom:0;width:min(500px,100%);background:var(--surface);border-left:1px solid var(--line);box-shadow:-10px 0 40px rgba(0,0,0,.25);display:flex;flex-direction:column;transform:translateX(104%);visibility:hidden;transition:transform .25s ease,visibility 0s linear .25s;padding-top:env(safe-area-inset-top,0px)}
+.drawer{position:fixed;z-index:50;top:0;right:0;bottom:0;width:var(--dw);background:var(--surface);border-left:1px solid var(--line);box-shadow:-10px 0 40px rgba(0,0,0,.25);display:flex;flex-direction:column;transform:translateX(104%);visibility:hidden;transition:transform .25s ease,visibility 0s linear .25s;padding-top:env(safe-area-inset-top,0px)}
 .drawer.open{transform:none;visibility:visible;transition:transform .25s ease}
 .dhead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
 .dhead h3{font-size:1.4rem}
@@ -232,6 +236,7 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
 
 @media (max-width:820px){
   .lanes{grid-template-columns:1fr}
+  body.notes-open{padding-right:0;padding-bottom:86vh}
   .drawer{top:auto;height:86%;width:100%;border-left:0;border-top:1px solid var(--line);transform:translateY(104%);border-radius:18px 18px 0 0}
   .drawer.open{transform:none}
   body{font-size:18px}
@@ -245,6 +250,7 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
   html:root:root:root{--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#EEF1F8;--ink:#151A33;--muted:#4F5775;--line:#C9D0E6;--accent:#B0214D;--accent-ink:#FFFFFF;--accent-soft:#F8DDE6;--now:#B7791F;--now-soft:#FBEBCB;--then:#3F57C0;--then-soft:#DDE3F8;--shadow:none;--mark:#FFE7A0;--ok:#1B7A48;--ok-soft:#D6F0E2;--bad:#B3261E;--bad-soft:#FADBD8;color-scheme:light}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact;box-shadow:none !important}
   html{scroll-behavior:auto}
+  body.notes-open{padding:0 !important}
   body{font-size:14px;line-height:1.5}
   .agenda,.fab,.drawer,.toast,.btn,.chk,.progress,.pick-bar,.flip .hint,.tip{display:none !important}
   .wrap{max-width:none;padding-inline:0}
@@ -572,7 +578,7 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
 
 </main>
 
-<footer class="wrap">Based on the club’s reading highlights from Chapter 1 of Whistler by Ann Patchett. · Page version 14</footer>
+<footer class="wrap">Based on the club’s reading highlights from Chapter 1 of Whistler by Ann Patchett. · Page version 15</footer>
 
 <!-- NOTES -->
 <button class="fab" id="fab" type="button" aria-controls="drawer" aria-expanded="false">
@@ -698,7 +704,7 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
   var oldStarter="<h3>My first reactions</h3><p><br></p><h3>Questions I have</h3><p><br></p><h3>Words to remember</h3><p><br></p><h3>My predictions</h3><p><br></p>";
   var saved=store(KEY);
   ed.innerHTML=(saved&&saved!==oldStarter)?saved:starter;
-  function setOpen(o){drawer.classList.toggle("open",o);fab.setAttribute("aria-expanded",o);if(o){setTimeout(function(){ed.focus()},260)}}
+  function setOpen(o){drawer.classList.toggle("open",o);document.body.classList.toggle("notes-open",o);fab.setAttribute("aria-expanded",o);if(o){setTimeout(function(){ed.focus()},260)}}
   fab.addEventListener("click",function(){setOpen(!drawer.classList.contains("open"))});
   $("#closeN").addEventListener("click",function(){setOpen(false);fab.focus()});
   document.addEventListener("keydown",function(e){if(e.key==="Escape"&&drawer.classList.contains("open")){setOpen(false)}});
