@@ -6,7 +6,7 @@
 <title>Whistler Book Club</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Young+Serif&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Young+Serif&family=Caveat:wght@500;700&display=swap">
 <style>
 /* Layout concept: one lesson, two time layers. Warm museum gold = NOW, cold night blue = THEN (1980).
    A sticky 50-minute agenda strip drives the flow; a notes drawer stays one tap away. */
@@ -20,20 +20,21 @@
   --shadow:0 6px 24px rgba(21,26,51,.10);
   --mark:#FFE7A0;
   --ok:#1B7A48; --ok-soft:#D6F0E2; --bad:#B3261E; --bad-soft:#FADBD8;
+  --wall:#E3E7F3; --dot:#C1C9DF;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#0B0F20; --surface:#141A38; --surface2:#1C2447; --ink:#E9ECF8; --muted:#A7AFCC; --line:#2B3463;
     --accent:#F2708F; --accent-ink:#1B0710; --accent-soft:#3A1A2A;
     --now:#E9B25A; --now-soft:#3A2D14; --then:#8FA2F2; --then-soft:#1F2850;
-    --shadow:0 6px 24px rgba(0,0,0,.4); --mark:#5C4A12; --ok:#6FD39B; --ok-soft:#153A29; --bad:#F2877F; --bad-soft:#43211F; color-scheme:dark;
+    --shadow:0 6px 24px rgba(0,0,0,.4); --mark:#5C4A12; --ok:#6FD39B; --ok-soft:#153A29; --bad:#F2877F; --bad-soft:#43211F; --wall:#111735; --dot:#232C5A; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#0B0F20; --surface:#141A38; --surface2:#1C2447; --ink:#E9ECF8; --muted:#A7AFCC; --line:#2B3463;
   --accent:#F2708F; --accent-ink:#1B0710; --accent-soft:#3A1A2A;
   --now:#E9B25A; --now-soft:#3A2D14; --then:#8FA2F2; --then-soft:#1F2850;
-  --shadow:0 6px 24px rgba(0,0,0,.4); --mark:#5C4A12; --ok:#6FD39B; --ok-soft:#153A29; --bad:#F2877F; --bad-soft:#43211F; color-scheme:dark;
+  --shadow:0 6px 24px rgba(0,0,0,.4); --mark:#5C4A12; --ok:#6FD39B; --ok-soft:#153A29; --bad:#F2877F; --bad-soft:#43211F; --wall:#111735; --dot:#232C5A; color-scheme:dark;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:84px}
@@ -243,6 +244,36 @@ body.notes-open .fab{display:none}
   .hero-inner{padding-block:40px 56px}
   .q{grid-template-columns:1fr}.q .body{grid-column:1}
 }
+/* HOME: COVER AND POST-IT MURAL */
+.hero .back{display:inline-block;margin-bottom:18px;color:var(--star);text-decoration:none;font-weight:700;border:1.5px solid rgba(246,232,174,.55);border-radius:999px;padding:4px 14px;font-size:.92rem;background:rgba(14,18,48,.55)}
+.hero .back:hover{background:rgba(14,18,48,.85)}
+.home-hero .hero-inner{padding-block:84px 96px}
+.chapters{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.chbtn{display:inline-flex;align-items:center;gap:12px;background:var(--star);color:#14183A;font-weight:700;font-size:1.3rem;text-decoration:none;padding:14px 30px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.35);transition:transform .2s}
+.chbtn:hover{transform:translateY(-3px)}
+.wallsec{padding-block:30px 20px}
+.wallbar{display:flex;flex-wrap:wrap;gap:12px 14px;align-items:center;margin-bottom:16px}
+.wallbar .spacer{flex:1 1 20px}
+.cdots{display:flex;gap:9px;align-items:center}
+.cdot{width:32px;height:32px;border-radius:50%;border:2px solid rgba(0,0,0,.22);background:var(--c);padding:0}
+.cdot[aria-pressed="true"]{outline:3px solid var(--accent);outline-offset:2px}
+.board{--ps:210px;position:relative;min-height:560px;border-radius:16px;background-color:var(--wall);background-image:radial-gradient(var(--dot) 1.3px,transparent 1.6px);background-size:26px 26px;border:1px solid var(--line);overflow:hidden}
+.empty-add{position:absolute;inset:0;margin:auto;width:min(340px,86%);height:150px;border:2.5px dashed var(--muted);border-radius:14px;background:transparent;color:var(--muted);font-weight:700;font-size:1.15rem}
+.empty-add:hover{border-color:var(--accent);color:var(--accent)}
+.pit{position:absolute;width:var(--ps);height:var(--ps);background:var(--pc);color:#2B2B2B;display:flex;flex-direction:column;border-radius:2px 2px 16px 2px;transform:rotate(var(--rot));box-shadow:0 12px 20px rgba(0,0,0,.28),inset 0 -22px 26px -22px rgba(0,0,0,.2)}
+.pit.drag{box-shadow:0 22px 30px rgba(0,0,0,.34),inset 0 -22px 26px -22px rgba(0,0,0,.2);transform:rotate(0deg) scale(1.03)}
+.pit-bar{display:flex;align-items:center;justify-content:space-between;height:36px;padding:0 6px;background:rgba(0,0,0,.07);cursor:grab;touch-action:none;user-select:none}
+.pit.drag .pit-bar{cursor:grabbing}
+.pit-bar button{border:0;background:transparent;color:#2B2B2B;font-weight:700;font-size:.82rem;min-width:30px;height:28px;border-radius:6px;padding:0 6px}
+.pit-bar button:hover{background:rgba(0,0,0,.12)}
+.pit-bar .grip{width:36px;height:6px;border-radius:3px;background:repeating-linear-gradient(90deg,rgba(0,0,0,.35) 0 4px,transparent 4px 8px)}
+.pit-text{flex:1;min-height:0;border:0;background:transparent;resize:none;outline:none;font-family:"Caveat","Segoe Script","Bradley Hand","Comic Sans MS",cursive;font-weight:500;font-size:1.55rem;line-height:1.12;padding:8px 12px 14px;color:#2B2B2B}
+.pit-text:focus-visible{outline:none;box-shadow:inset 0 0 0 2px rgba(0,0,0,.35)}
+.homefoot{padding-block:8px 60px;color:var(--muted);font-size:.9rem;text-align:center}
+#printWall{display:none}
+.pr-head{display:none}
+@media (max-width:560px){.board{--ps:168px}.pit-text{font-size:1.4rem}.home-hero .hero-inner{padding-block:56px 64px}}
+
 /* PRINT / SAVE AS PDF */
 .print-notes{display:none}
 @media print{
@@ -251,6 +282,22 @@ body.notes-open .fab{display:none}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact;box-shadow:none !important}
   html{scroll-behavior:auto}
   body.notes-open{padding:0 !important}
+  #home>*:not(#printWall):not(.home-hero){display:none !important}
+  .home-hero .chapters{display:none !important}
+  .home-hero .hero-inner{padding-block:24px 28px}
+  .home-hero h1{font-size:3.6rem}
+  .home-hero .by{margin-top:2px}
+  .pr-head{display:block;margin-top:16px}
+  .pr-head .pr-big{font-family:var(--serif);font-size:1.7rem;color:var(--star);line-height:1.15}
+  .pr-head .pr-sub{color:var(--on-night-muted);margin-top:4px;font-size:1rem}
+  .pr-head a{display:inline-block;margin-top:8px;background:var(--star);color:#14183A !important;font-weight:700;font-size:1.05rem;text-decoration:none;padding:6px 18px;border-radius:999px}
+  #printWall{margin-top:18px}
+  #printWall{display:block}
+  #printWall h2{font-size:2rem;margin-bottom:4px}
+  #printWall .sub{color:var(--muted);margin-bottom:16px}
+  .pw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .pw{min-height:170px;padding:14px 16px;border-radius:2px 2px 14px 2px;color:#2B2B2B;font-family:"Caveat","Segoe Script","Comic Sans MS",cursive;font-size:21px;line-height:1.2;white-space:pre-wrap;overflow-wrap:anywhere;break-inside:avoid}
+  .hero .back{display:none !important}
   body{font-size:14px;line-height:1.5}
   .agenda,.fab,.drawer,.toast,.btn,.chk,.progress,.pick-bar,.flip .hint,.tip{display:none !important}
   .wrap{max-width:none;padding-inline:0}
@@ -285,6 +332,59 @@ body.notes-open .fab{display:none}
 
 </head>
 <body>
+<div id="home">
+  <header class="hero home-hero">
+    <svg class="hero-art" viewBox="0 0 1200 480" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="glow2" cx="50%" cy="100%" r="80%"><stop offset="0" stop-color="#E9B25A" stop-opacity=".55"/><stop offset="1" stop-color="#E9B25A" stop-opacity="0"/></radialGradient>
+      <linearGradient id="milky2" x1="0" x2="1"><stop offset="0" stop-color="#F6E8AE" stop-opacity="0"/><stop offset=".5" stop-color="#F6E8AE" stop-opacity=".16"/><stop offset="1" stop-color="#F6E8AE" stop-opacity="0"/></linearGradient>
+    </defs>
+    <!-- THEN: night sky, road, hills -->
+    <ellipse cx="900" cy="150" rx="420" ry="46" fill="url(#milky2)" transform="rotate(-24 900 150)"/>
+    <g id="stars2"></g>
+    <path d="M520 480 C640 360 760 400 860 320 C960 240 1100 300 1200 220 L1200 480 Z" fill="#090C24"/>
+    <path d="M700 480 C800 420 780 360 880 330 S1040 280 1000 215" fill="none" stroke="#1D2552" stroke-width="40" stroke-linecap="round"/>
+    <path d="M700 480 C800 420 780 360 880 330 S1040 280 1000 215" fill="none" stroke="#4A5CAA" stroke-width="2" stroke-dasharray="10 12" stroke-linecap="round"/>
+    <g transform="translate(862 318) rotate(-18)" fill="#05071A" stroke="#4A5CAA" stroke-width="1">
+      <rect x="-24" y="-10" width="48" height="14" rx="3"/><rect x="-14" y="-18" width="30" height="10" rx="3"/>
+      <circle cx="-14" cy="6" r="5"/><circle cx="14" cy="6" r="5"/>
+    </g>
+    <!-- NOW: museum arches -->
+    <rect x="0" y="0" width="560" height="480" fill="url(#glow2)"/>
+    <g fill="#E9B25A" opacity=".2">
+      <path d="M30 480V270a70 70 0 0 1 140 0V480Z"/><path d="M210 480V230a70 70 0 0 1 140 0V480Z"/><path d="M390 480V270a70 70 0 0 1 140 0V480Z"/>
+    </g>
+    <g fill="#E9B25A" opacity=".16"><path d="M52 480V275a48 48 0 0 1 96 0V480Z"/><path d="M232 480V235a48 48 0 0 1 96 0V480Z"/><path d="M412 480V275a48 48 0 0 1 96 0V480Z"/></g>
+  </svg>
+    <div class="wrap hero-inner">
+      <p class="label eyebrow">Book Club</p>
+      <h1>Whistler</h1>
+      <p class="by">a novel by Ann Patchett</p>
+      <div class="chapters"><a class="chbtn" href="#chapter1">Chapter 1 <span aria-hidden="true">→</span></a></div>
+      <div class="pr-head"><p class="pr-big">Check out our Book Club!</p><p class="pr-sub">Read along with us, and see what we think, at</p><a href="https://teacher-nanda.github.io/Whistler/">teacher-nanda.github.io/Whistler</a></div>
+    </div>
+  </header>
+  <main class="wrap wallsec">
+    <div class="wallbar">
+      <div class="cdots" role="group" aria-label="Color for new post-its" id="cdots">
+        <button class="cdot" type="button" style="--c:#FFE76B" data-c="#FFE76B" aria-pressed="true" aria-label="Yellow"></button>
+        <button class="cdot" type="button" style="--c:#FFB8CF" data-c="#FFB8CF" aria-pressed="false" aria-label="Pink"></button>
+        <button class="cdot" type="button" style="--c:#B5EFC4" data-c="#B5EFC4" aria-pressed="false" aria-label="Green"></button>
+        <button class="cdot" type="button" style="--c:#B3D4FF" data-c="#B3D4FF" aria-pressed="false" aria-label="Blue"></button>
+        <button class="cdot" type="button" style="--c:#FFC98B" data-c="#FFC98B" aria-pressed="false" aria-label="Orange"></button>
+      </div>
+      <button class="btn" id="addPit" type="button">Add post-it</button>
+      <span class="spacer"></span>
+      <button class="btn" id="savePits" type="button">Save post-its</button>
+      <button class="btn ghost small" id="clearPits" type="button">Clear wall</button>
+    </div>
+    <div class="board" id="board"><button class="empty-add" id="ghostAdd" type="button">+ Add your first post-it</button></div>
+  </main>
+  <p class="homefoot">Page version 16</p>
+  <section id="printWall"><h2>Our post-its</h2><p class="sub" id="pwDate"></p><div class="pw-grid" id="pwGrid"></div></section>
+</div>
+
+<div id="ch1" hidden>
 <header class="hero" id="top">
   <svg class="hero-art" viewBox="0 0 1200 480" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
     <defs>
@@ -311,6 +411,7 @@ body.notes-open .fab{display:none}
     <text x="40" y="44" fill="#F6E8AE" font-size="14" font-weight="700" letter-spacing="2.4" font-family="Atkinson Hyperlegible, sans-serif">NOW · THE METROPOLITAN MUSEUM</text>
   </svg>
   <div class="wrap hero-inner">
+    <a class="back" href="#home">← All chapters</a>
     <p class="label eyebrow">Book Club · Meeting 1</p>
     <h1>Whistler</h1>
     <p class="by">a novel by Ann Patchett</p>
@@ -578,7 +679,7 @@ body.notes-open .fab{display:none}
 
 </main>
 
-<footer class="wrap">Based on the club’s reading highlights from Chapter 1 of Whistler by Ann Patchett. · Page version 15</footer>
+<footer class="wrap">Based on the club’s reading highlights from Chapter 1 of Whistler by Ann Patchett.</footer>
 
 <!-- NOTES -->
 <button class="fab" id="fab" type="button" aria-controls="drawer" aria-expanded="false">
@@ -601,6 +702,7 @@ body.notes-open .fab{display:none}
   <div class="editor" id="editor" contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Notes"></div>
   <div class="dfoot"><span class="st" id="st">Saved on this device</span><button class="btn small" id="savePdf" type="button">Save PDF</button><button class="btn ghost small" id="clearN" type="button">Clear all</button></div>
 </aside>
+</div><!-- /ch1 -->
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -610,8 +712,8 @@ body.notes-open .fab{display:none}
   function store(k,v){try{if(v===undefined){return localStorage.getItem(k)}localStorage.setItem(k,v);}catch(e){return null}}
 
   /* stars */
-  (function(){
-    var g=document.getElementById("stars"), seed=7, ns="http://www.w3.org/2000/svg";
+  ["stars","stars2"].forEach(function(id){
+    var g=document.getElementById(id), seed=7, ns="http://www.w3.org/2000/svg";
     function r(){seed=(seed*16807)%2147483647;return seed/2147483647}
     for(var i=0;i<90;i++){
       var c=document.createElementNS(ns,"circle");
@@ -621,7 +723,7 @@ body.notes-open .fab{display:none}
       if(i%3===0){c.setAttribute("class","twinkle");c.style.animationDelay=(r()*3).toFixed(1)+"s"}
       g.appendChild(c);
     }
-  })();
+  });
 
   /* toast */
   var toastEl=$("#toast"), tt;
@@ -742,6 +844,7 @@ body.notes-open .fab{display:none}
 
   var pn=$("#printNotes"), pnb=$("#pnBody"), origTitle=document.title;
   window.addEventListener("beforeprint",function(){
+    if(!homeEl.hidden){buildWall();origTitle=document.title;document.title="Whistler - post-it mural";return}
     pnb.innerHTML=ed.innerHTML;pn.classList.toggle("has",ed.innerText.trim().length>0);
     origTitle=document.title;document.title="Whistler - Chapter 1 slides and notes";
   });
@@ -756,6 +859,85 @@ body.notes-open .fab{display:none}
     cl.setAttribute("data-arm","1");cl.textContent="Tap again to clear";clearTimeout(ct);
     ct=setTimeout(function(){cl.removeAttribute("data-arm");cl.textContent="Clear all"},3000);
   });
+  /* ---- router: home cover and chapters ---- */
+  var homeEl=$("#home"), chEl=$("#ch1"), first=true;
+  function route(){
+    var h=location.hash, toHome=(h===""||h==="#"||h==="#home"), wasHome=!homeEl.hidden;
+    homeEl.hidden=!toHome;chEl.hidden=toHome;
+    if(toHome){setOpen(false);layoutPits()}
+    if(first||toHome!==wasHome){window.scrollTo(0,0)}
+    first=false;
+  }
+  window.addEventListener("hashchange",route);
+
+  /* ---- post-it mural ---- */
+  var KEYP="whistler-postits-v1", COLORS=["#FFE76B","#FFB8CF","#B5EFC4","#B3D4FF","#FFC98B"], pits=[], selColor=COLORS[0], zTop=10;
+  var board=$("#board"), ghost=$("#ghostAdd");
+  try{var rawp=localStorage.getItem(KEYP);pits=rawp?JSON.parse(rawp):[]}catch(e){pits=[]}
+  if(!Array.isArray(pits))pits=[];
+  var psv;function savePits(){clearTimeout(psv);psv=setTimeout(function(){try{localStorage.setItem(KEYP,JSON.stringify(pits))}catch(e){}},250)}
+  function pSize(){return parseFloat(getComputedStyle(board).getPropertyValue("--ps"))||210}
+  function rnd(a,b){return a+Math.random()*(b-a)}
+  function clampPit(p){var ps=pSize(),bw=board.clientWidth;p.x=Math.max(0,Math.min(p.x,Math.max(0,bw-ps)));p.y=Math.max(0,p.y)}
+  function fitBoard(){var ps=pSize(),m=0;pits.forEach(function(p){m=Math.max(m,p.y+ps+30)});board.style.minHeight=Math.max(560,m)+"px"}
+  function layoutPits(){if(homeEl.hidden||!board.clientWidth)return;pits.forEach(function(p){clampPit(p)});renderPits()}
+  function renderPits(){
+    $$(".pit",board).forEach(function(n){n.remove()});
+    ghost.hidden=pits.length>0;
+    pits.forEach(function(p){board.appendChild(buildPit(p))});
+    fitBoard();
+  }
+  function buildPit(p){
+    var d=document.createElement("div");d.className="pit";d.setAttribute("data-id",p.id);
+    d.style.left=p.x+"px";d.style.top=p.y+"px";d.style.setProperty("--pc",p.c);d.style.setProperty("--rot",p.r+"deg");d.style.zIndex=p.z||1;
+    d.innerHTML='<div class="pit-bar"><button type="button" class="pc" aria-label="Change post-it color" title="Change color">Color</button><span class="grip" aria-hidden="true"></span><button type="button" class="pd" aria-label="Delete post-it" title="Delete">×</button></div><textarea class="pit-text" aria-label="Post-it text" maxlength="400"></textarea>';
+    var ta=$("textarea",d);ta.value=p.t||"";
+    ta.addEventListener("input",function(){p.t=ta.value;savePits()});
+    $(".pc",d).addEventListener("click",function(){var i=COLORS.indexOf(p.c);p.c=COLORS[(i+1)%COLORS.length];d.style.setProperty("--pc",p.c);savePits()});
+    var pd=$(".pd",d),pdt;
+    pd.addEventListener("click",function(){
+      if(pd.getAttribute("data-arm")==="1"){pits=pits.filter(function(x){return x!==p});savePits();renderPits();return}
+      pd.setAttribute("data-arm","1");pd.textContent="Sure?";clearTimeout(pdt);pdt=setTimeout(function(){pd.removeAttribute("data-arm");pd.textContent="×"},2500);
+    });
+    var bar=$(".pit-bar",d);
+    bar.addEventListener("pointerdown",function(e){
+      if(e.target.closest("button"))return;
+      e.preventDefault();bar.setPointerCapture(e.pointerId);
+      var sx=e.clientX,sy=e.clientY,ox=p.x,oy=p.y;d.classList.add("drag");p.z=++zTop;d.style.zIndex=p.z;
+      function mv(ev){p.x=ox+ev.clientX-sx;p.y=oy+ev.clientY-sy;clampPit(p);d.style.left=p.x+"px";d.style.top=p.y+"px";fitBoard()}
+      function up(){bar.removeEventListener("pointermove",mv);bar.removeEventListener("pointerup",up);bar.removeEventListener("pointercancel",up);d.classList.remove("drag");savePits()}
+      bar.addEventListener("pointermove",mv);bar.addEventListener("pointerup",up);bar.addEventListener("pointercancel",up);
+    });
+    return d;
+  }
+  function addPit(){
+    var ps=pSize(),bw=board.clientWidth||900,cols=Math.max(1,Math.floor((bw-20)/(ps+24))),i=pits.length;
+    var p={id:Date.now()+"-"+Math.floor(Math.random()*1e4),t:"",c:selColor,r:Math.round(rnd(-3,3)*10)/10,z:++zTop,
+      x:20+(i%cols)*(ps+24)+rnd(-6,6),y:24+Math.floor(i/cols)*(ps+28)+rnd(-4,4)};
+    clampPit(p);pits.push(p);savePits();renderPits();
+    var ta=$('.pit[data-id="'+p.id+'"] textarea',board);if(ta)ta.focus();
+  }
+  $("#addPit").addEventListener("click",addPit);ghost.addEventListener("click",addPit);
+  $$("#cdots .cdot").forEach(function(b){b.addEventListener("click",function(){
+    selColor=b.getAttribute("data-c");$$("#cdots .cdot").forEach(function(x){x.setAttribute("aria-pressed",x===b)})})});
+  var cp=$("#clearPits"),cpt;
+  cp.addEventListener("click",function(){
+    if(cp.getAttribute("data-arm")==="1"){pits=[];savePits();renderPits();cp.removeAttribute("data-arm");cp.textContent="Clear wall";toast("Wall cleared");return}
+    cp.setAttribute("data-arm","1");cp.textContent="Tap again to clear";clearTimeout(cpt);cpt=setTimeout(function(){cp.removeAttribute("data-arm");cp.textContent="Clear wall"},3000);
+  });
+  function buildWall(){
+    var g=$("#pwGrid");g.innerHTML="";
+    try{$("#pwDate").textContent="Saved on "+new Date().toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})}catch(e){}
+    pits.slice().sort(function(a,b){return Math.round(a.y/70)-Math.round(b.y/70)||a.x-b.x}).forEach(function(p){
+      var d=document.createElement("div");d.className="pw";d.style.background=p.c;d.textContent=p.t||"";g.appendChild(d)});
+  }
+  $("#savePits").addEventListener("click",function(){
+    if(!pits.length){toast("Add a post-it first");return}
+    toast("In the print window, choose Save as PDF");
+    setTimeout(function(){try{window.print()}catch(e){}},350);
+  });
+  var rz;window.addEventListener("resize",function(){clearTimeout(rz);rz=setTimeout(layoutPits,150)});
+  route();
 })();
 </script>
 
