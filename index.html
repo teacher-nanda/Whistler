@@ -195,8 +195,8 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
 .sw i{display:block;width:20px;height:20px;border-radius:50%;border:2px solid rgba(0,0,0,.25)}
 .sw.none i{background:var(--surface);position:relative;border-color:var(--muted)}
 .sw.none i::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;background:var(--accent);transform:rotate(45deg)}
-.editor{flex:1;overflow:auto;padding:18px 20px;font-size:1.1rem;line-height:1.65;outline:none;min-height:0}
-.editor h3{font-size:1.3rem;margin:14px 0 4px;color:var(--accent)}
+.editor{flex:1;overflow:auto;padding:16px 18px;font-size:.9rem;line-height:1.55;outline:none;min-height:0}
+.editor h3{font-size:1.05rem;margin:14px 0 4px;color:var(--accent)}
 .editor p{margin:0 0 8px}
 .editor ul,.editor ol{margin:0 0 8px;padding-left:24px}
 .editor [style*="background"]{color:#151A33 !important}
@@ -248,7 +248,7 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
     <p class="label eyebrow">Book Club · Meeting 1</p>
     <h1>Whistler</h1>
     <p class="by">a novel by Ann Patchett</p>
-    <div class="chips"><span>Chapter 1 only</span><span>50 minutes</span><span>Bring your highlights</span></div>
+    <div class="chips"><span>50 minutes</span><span>Bring your highlights</span></div>
   </div>
 </header>
 
@@ -507,7 +507,6 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
   <div class="dhead"><h3>My notes</h3><button class="btn ghost small" id="closeN" type="button">Close</button></div>
   <div class="tb" id="tb" role="toolbar" aria-label="Formatting">
     <button type="button" data-c="bold" title="Bold" aria-label="Bold"><b>B</b></button>
-    <button type="button" data-c="italic" title="Italic" aria-label="Italic"><i>I</i></button>
     <button type="button" data-c="underline" title="Underline" aria-label="Underline"><u>U</u></button>
     <button type="button" data-c="strikeThrough" title="Strikethrough" aria-label="Strikethrough"><s>S</s></button>
     <span class="sep"></span>
@@ -516,15 +515,6 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
     <button type="button" class="sw" data-h="#A8F0C0" title="Highlight green" aria-label="Highlight green"><i style="background:#A8F0C0"></i></button>
     <button type="button" class="sw" data-h="#A9CBFF" title="Highlight blue" aria-label="Highlight blue"><i style="background:#A9CBFF"></i></button>
     <button type="button" class="sw none" data-h="transparent" title="Remove highlight" aria-label="Remove highlight"><i></i></button>
-    <span class="sep"></span>
-    <button type="button" data-c="insertUnorderedList" title="Bullet list" aria-label="Bullet list">• List</button>
-    <button type="button" data-c="insertOrderedList" title="Numbered list" aria-label="Numbered list">1. List</button>
-    <button type="button" data-b="h3" title="Heading" aria-label="Heading">H</button>
-    <button type="button" data-b="p" title="Normal text" aria-label="Normal text">Aa</button>
-    <span class="sep"></span>
-    <button type="button" data-c="undo" title="Undo" aria-label="Undo">Undo</button>
-    <button type="button" data-c="redo" title="Redo" aria-label="Redo">Redo</button>
-    <button type="button" data-c="removeFormat" title="Clear formatting" aria-label="Clear formatting">Clear style</button>
   </div>
   <div class="editor" id="editor" contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Notes"></div>
   <div class="dfoot"><span class="st" id="st">Saved on this device</span><button class="btn ghost small" id="copyN" type="button">Copy notes</button><button class="btn ghost small" id="clearN" type="button">Clear all</button></div>
@@ -606,9 +596,10 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
 
   /* notes drawer */
   var drawer=$("#drawer"), fab=$("#fab"), ed=$("#editor"), st=$("#st");
-  var starter="<h3>My first reactions</h3><p><br></p><h3>Questions I have</h3><p><br></p><h3>Words to remember</h3><p><br></p><h3>My predictions</h3><p><br></p>";
+  var starter="";
+  var oldStarter="<h3>My first reactions</h3><p><br></p><h3>Questions I have</h3><p><br></p><h3>Words to remember</h3><p><br></p><h3>My predictions</h3><p><br></p>";
   var saved=store(KEY);
-  ed.innerHTML=(saved&&saved.length)?saved:starter;
+  ed.innerHTML=(saved&&saved!==oldStarter)?saved:starter;
   function setOpen(o){drawer.classList.toggle("open",o);fab.setAttribute("aria-expanded",o);if(o){setTimeout(function(){ed.focus()},260)}}
   fab.addEventListener("click",function(){setOpen(!drawer.classList.contains("open"))});
   $("#closeN").addEventListener("click",function(){setOpen(false);fab.focus()});
