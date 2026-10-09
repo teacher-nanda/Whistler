@@ -18,20 +18,21 @@
   --serif:"Young Serif", Georgia, "Times New Roman", serif;
   --sans:"Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
   --shadow:0 6px 24px rgba(21,26,51,.10);
+  --mark:#FFE7A0;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#0B0F20; --surface:#141A38; --surface2:#1C2447; --ink:#E9ECF8; --muted:#A7AFCC; --line:#2B3463;
     --accent:#F2708F; --accent-ink:#1B0710; --accent-soft:#3A1A2A;
     --now:#E9B25A; --now-soft:#3A2D14; --then:#8FA2F2; --then-soft:#1F2850;
-    --shadow:0 6px 24px rgba(0,0,0,.4); color-scheme:dark;
+    --shadow:0 6px 24px rgba(0,0,0,.4); --mark:#5C4A12; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#0B0F20; --surface:#141A38; --surface2:#1C2447; --ink:#E9ECF8; --muted:#A7AFCC; --line:#2B3463;
   --accent:#F2708F; --accent-ink:#1B0710; --accent-soft:#3A1A2A;
   --now:#E9B25A; --now-soft:#3A2D14; --then:#8FA2F2; --then-soft:#1F2850;
-  --shadow:0 6px 24px rgba(0,0,0,.4); color-scheme:dark;
+  --shadow:0 6px 24px rgba(0,0,0,.4); --mark:#5C4A12; color-scheme:dark;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:84px}
@@ -41,6 +42,7 @@ p{margin:0}
 button{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
 .wrap{max-width:1080px;margin-inline:auto;padding-inline:20px}
+mark.k{background:var(--mark);color:inherit;border-radius:4px;padding:0 .2em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .label{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
 
 /* HERO */
@@ -215,6 +217,44 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
   .hero-inner{padding-block:40px 56px}
   .q{grid-template-columns:1fr}.q .body{grid-column:1}
 }
+/* PRINT / SAVE AS PDF */
+.ideas-print,.print-notes{display:none}
+@media print{
+  @page{size:A4;margin:12mm}
+  html:root:root:root{--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#EEF1F8;--ink:#151A33;--muted:#4F5775;--line:#C9D0E6;--accent:#B0214D;--accent-ink:#FFFFFF;--accent-soft:#F8DDE6;--now:#B7791F;--now-soft:#FBEBCB;--then:#3F57C0;--then-soft:#DDE3F8;--shadow:none;--mark:#FFE7A0;color-scheme:light}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact;box-shadow:none !important}
+  html{scroll-behavior:auto}
+  body{font-size:14px;line-height:1.5}
+  .agenda,.fab,.drawer,.toast,.btn,.chk,.progress,.pick-bar,.ideas,.idea-panel,.flip .hint,.tip{display:none !important}
+  .wrap{max-width:none;padding-inline:0}
+  .hero-inner{padding-block:28px 34px}
+  .hero h1{font-size:4rem}
+  section.step{padding-block:0 0;break-before:page}
+  section.step#warmup{break-before:auto;padding-top:22px}
+  .sec-head h2{font-size:2rem}
+  .intro{margin-bottom:16px}
+  .card,.q,.lane,.person,.flip,.quote,.tree,.round>h3,.ideas-print p{break-inside:avoid}
+  .reveal[hidden],.hint[hidden],.ans[hidden]{display:block !important}
+  .reveal,.q .hint,.ans{margin-top:2px}
+  .flip .front[hidden],.flip .back[hidden]{display:block !important}
+  .flip{min-height:0;padding:10px 14px}
+  .flip .w{font-size:1.15rem}
+  .flip .front,.flip .back{display:block}
+  .flip[aria-pressed="true"]{background:var(--surface);border-color:var(--line)}
+  .tol .ans{margin-top:8px}
+  .q.done{opacity:1}.q.done .qt{text-decoration:none}
+  .ideas-print{display:block;margin-bottom:22px}
+  .ideas-print p{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--accent);border-radius:10px;padding:10px 14px;margin-bottom:8px}
+  .print-notes{display:none;break-before:page}
+  .print-notes.has{display:block}
+  .print-notes h2{font-size:2rem;margin-bottom:12px}
+  .pn-body{font-size:14px;line-height:1.6}
+  .pn-body h3{font-size:1.1rem;margin:12px 0 4px;color:var(--accent)}
+  .pn-body p{margin:0 0 8px}.pn-body ul,.pn-body ol{margin:0 0 8px;padding-left:24px}
+  .pn-body [style*="background"]{color:#151A33 !important}
+  .pn-body [style*="transparent"],.pn-body [style*="rgba(0, 0, 0, 0)"]{color:var(--ink) !important}
+  footer{padding-block:20px 0}
+}
 </style>
 
 </head>
@@ -270,11 +310,11 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
 <!-- 1 WARM-UP -->
 <section class="step" id="warmup">
   <div class="sec-head"><span class="badge">Step 1 · 5 min</span><h2>Warm-up: faces from the past</h2></div>
-  <p class="intro">Chapter 1 starts with a surprise meeting in a museum. Pick one question and answer it in two or three sentences. Everyone gets a turn.</p>
+  <p class="intro">Chapter 1 starts with a surprise meeting in a museum. Pick <b>one question</b> and answer it in <mark class="k">two or three sentences</mark>. Everyone gets a turn.</p>
   <div class="pick" id="pick">
-    <div class="card"><span class="label">Question A</span><p>Have you ever seen someone from your past by surprise, like a teacher, a neighbor or an old friend? Where were you, and what did you do?</p></div>
-    <div class="card"><span class="label">Question B</span><p>Think of a family memory that two people tell differently. Who remembers it correctly, and how do you know?</p></div>
-    <div class="card"><span class="label">Question C</span><p>Could you recognize a person you loved as a child after forty years? What would stay the same about them?</p></div>
+    <div class="card"><span class="label">Question A</span><p>Have you ever seen <mark class="k">someone from your past</mark> by surprise, like a teacher, a neighbor or an old friend? Where were you, and what did you do?</p></div>
+    <div class="card"><span class="label">Question B</span><p>Think of a family memory that two people tell <mark class="k">differently</mark>. Who remembers it correctly, and how do you know?</p></div>
+    <div class="card"><span class="label">Question C</span><p>Could you <mark class="k">recognize</mark> a person you loved as a child <mark class="k">after forty years</mark>? What would stay the same about them?</p></div>
   </div>
   <div class="pick-bar"><button class="btn" id="pickBtn" type="button">Pick a question for us</button><span class="tip" style="margin:0">Or choose your own.</span></div>
 </section>
@@ -282,33 +322,33 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
 <!-- 2 STORY -->
 <section class="step" id="story">
   <div class="sec-head"><span class="badge">Step 2 · 8 min</span><h2>The story in two time layers</h2></div>
-  <p class="intro">The chapter jumps between the present day and one Friday in 1980. Keep both layers in mind.</p>
+  <p class="intro">The chapter jumps between the <mark class="k">present day</mark> and one <mark class="k">Friday in 1980</mark>. Keep both layers in mind.</p>
   <div class="sixty">
-    <div class="card"><b>The surprise</b>In New York, Daphne and her husband Jonathan meet an old man who has been watching them. He is Eddie Triplett, her stepfather from long ago.</div>
-    <div class="card"><b>The wound</b>Daphne cried when she realized who he was. She tells her sister Leda she believes she ruined Eddie’s life.</div>
-    <div class="card"><b>The flashback</b>We go back to January 1980. Leda is sick, Eddie helps, and a night drive with Daphne ends with the car leaving the road.</div>
+    <div class="card"><b>The surprise</b>In New York, Daphne and her husband Jonathan meet an old man who has been watching them. He is <b>Eddie Triplett</b>, her <mark class="k">stepfather</mark> from long ago.</div>
+    <div class="card"><b>The wound</b>Daphne cried when she realized who he was. She tells her sister Leda she believes she <mark class="k">ruined Eddie’s life</mark>.</div>
+    <div class="card"><b>The flashback</b>We go back to <b>January 1980</b>. Leda is sick, Eddie helps, and a night drive with Daphne ends with <mark class="k">the car leaving the road</mark>.</div>
   </div>
   <div class="lanes">
     <div class="lane now">
       <p class="where">Now · New York City</p>
       <h3>Daphne is 53</h3>
       <ol class="beats">
-        <li><b>At the Met</b>Jonathan whispers that an old man keeps looking at Daphne. He leaves the next day on what might be a long trip.</li>
-        <li><b>“This is your stepfather”</b>Jonathan talks to the man. Daphne knows his voice before she knows his face: Eddie Triplett.</li>
-        <li><b>Lunch</b>They catch up on jobs, children and books. Eddie offers his number from a tiny notebook but will not take hers.</li>
-        <li><b>The walk across the park</b>Jonathan goes with Daphne to Leda’s building. She realizes he does not want her to get lost.</li>
-        <li><b>Daphne and Leda</b>Why did she cry? “Because I had loved him and I had ruined his life.” They talk about the car accident.</li>
+        <li><b>At the Met</b>Jonathan whispers that an old man <mark class="k">keeps looking at Daphne</mark>. He leaves the next day on what might be a long trip.</li>
+        <li><b>“This is your stepfather”</b>Jonathan talks to the man. Daphne knows <mark class="k">his voice before his face</mark>: <b>Eddie Triplett</b>.</li>
+        <li><b>Lunch</b>They <mark class="k">catch up</mark> on jobs, children and books. Eddie offers his number from a tiny notebook but <mark class="k">will not take hers</mark>.</li>
+        <li><b>The walk across the park</b>Jonathan goes with Daphne to Leda’s building. She realizes he <mark class="k">does not want her to get lost</mark>.</li>
+        <li><b>Daphne and Leda</b>Why did she cry? “Because I had loved him and I had ruined his life.” They talk about <mark class="k">the car accident</mark>.</li>
       </ol>
     </div>
     <div class="lane then">
       <p class="where">Then · Winchester, Massachusetts</p>
       <h3>Friday, January 18, 1980</h3>
       <ol class="beats">
-        <li><b>Leda is sick at school</b>The nurse calls Abigail, their mother, who works at a publisher with Eddie. Eddie covers for her at the office.</li>
-        <li><b>“Make sure it’s not appendicitis”</b>Eddie tells Abigail how to check. Leda screams when Abigail touches her stomach, and she goes into surgery.</li>
-        <li><b>Eddie and Daphne</b>Eddie picks up Daphne, packs bags, and they visit the hospital. Leda sleeps through it.</li>
-        <li><b>A drive with no purpose</b>Leaving the hospital, Eddie takes Daphne on a drive that nobody can explain later. They switch off the headlights to see the stars.</li>
-        <li><b>The edge of the road</b>The car goes off the road into the dark. Eddie’s one question: is Daphne wearing her seat belt?</li>
+        <li><b>Leda is sick at school</b>The nurse calls Abigail, their mother, who works at a publisher with Eddie. Eddie <mark class="k">covers for her</mark> at the office.</li>
+        <li><b>“Make sure it’s not appendicitis”</b>Eddie tells Abigail how to check. Leda <mark class="k">screams</mark> when Abigail touches her stomach, and she goes into <b>surgery</b>.</li>
+        <li><b>Eddie and Daphne</b>Eddie picks up Daphne, packs bags, and they visit the hospital. Leda <mark class="k">sleeps through it</mark>.</li>
+        <li><b>A drive with no purpose</b>Leaving the hospital, Eddie takes Daphne on a drive that <mark class="k">nobody can explain</mark> later. They <mark class="k">switch off the headlights</mark> to see the stars.</li>
+        <li><b>The edge of the road</b>The car goes off the road into the dark. Eddie’s one question: is Daphne wearing her <mark class="k">seat belt</mark>?</li>
       </ol>
     </div>
   </div>
@@ -318,7 +358,6 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
 <!-- 3 PEOPLE -->
 <section class="step" id="people">
   <div class="sec-head"><span class="badge">Step 3 · 7 min</span><h2>Who is who</h2></div>
-  <p class="intro">Seven names in one chapter is a lot. Use the map first, then the cards.</p>
   <div class="tree" aria-label="Daphne and Leda’s mother had three husbands">
     <p class="tree-title label">Abigail’s three husbands, in order</p>
     <div class="t">Neil “Buddy” Zabriskie<small>father of Daphne and Leda</small></div>
@@ -331,32 +370,32 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
     <article class="card person">
       <div class="top"><div class="av" style="background:#B0214D">D</div><div><h3>Daphne</h3><p class="role">Narrator · Daphne Fuller, born Zabriskie</p></div></div>
       <span class="tag both">Now and then</span>
-      <ul><li>53 now. Teaches English at a girls’ prep school.</li><li>Took Jonathan’s name when they married.</li><li>Reads constantly. Rarely cries.</li></ul>
+      <ul><li><b>53</b> now. Teaches <b>English</b> at a girls’ prep school.</li><li>Took <b>Jonathan’s name</b> when they married.</li><li>Reads constantly. <mark class="k">Rarely cries</mark>.</li></ul>
     </article>
     <article class="card person">
       <div class="top"><div class="av" style="background:#B7791F">J</div><div><h3>Jonathan</h3><p class="role">Daphne’s husband</p></div></div>
       <span class="tag now">Now</span>
-      <ul><li>70, a retired hospital administrator.</li><li>His first wife died of melanoma, the same illness Daphne’s father had.</li><li>Curious and kind. He starts the conversation with Eddie.</li></ul>
+      <ul><li><b>70</b>, a retired <b>hospital administrator</b>.</li><li>His first wife died of <mark class="k">melanoma</mark>, the same illness Daphne’s father had.</li><li><mark class="k">Curious and kind</mark>. He starts the conversation with Eddie.</li></ul>
     </article>
     <article class="card person">
       <div class="top"><div class="av" style="background:#3F57C0">E</div><div><h3>Eddie Triplett</h3><p class="role">Daphne’s stepfather, long ago</p></div></div>
       <span class="tag both">Now and then</span>
-      <ul><li>76. A book editor who is “not retired in the least.”</li><li>Married to Abigail for fourteen months.</li><li>Carries a tiny leather notebook and a tiny pen.</li></ul>
+      <ul><li><b>76</b>. A <b>book editor</b> who is “not retired in the least.”</li><li>Married to Abigail for <mark class="k">fourteen months</mark>.</li><li>Carries a <b>tiny leather notebook</b> and a tiny pen.</li></ul>
     </article>
     <article class="card person">
       <div class="top"><div class="av" style="background:#0F8B8D">L</div><div><h3>Leda</h3><p class="role">Daphne’s sister</p></div></div>
       <span class="tag both">Now and then</span>
-      <ul><li>A clinical psychologist who writes a column called “Your Therapist.”</li><li>Married to Steve, who works at a hedge fund.</li><li>She says she was almost eight and in second grade when she had appendicitis.</li></ul>
+      <ul><li>A <b>clinical psychologist</b> who writes a column called “Your Therapist.”</li><li>Married to Steve, who works at a hedge fund.</li><li>She says she was <mark class="k">almost eight</mark> and in second grade when she had <b>appendicitis</b>.</li></ul>
     </article>
     <article class="card person">
       <div class="top"><div class="av" style="background:#7A4FA3">A</div><div><h3>Abigail</h3><p class="role">Their mother</p></div></div>
       <span class="tag both">Now and then</span>
-      <ul><li>76 now, married to Lucas Ekker near Boston.</li><li>In 1980 she loved her publishing job and needed to keep it.</li><li>Daphne has not told her about Eddie.</li></ul>
+      <ul><li><b>76</b> now, married to <b>Lucas Ekker</b> near Boston.</li><li>In 1980 she <mark class="k">loved her publishing job</mark> and needed to keep it.</li><li>Daphne <mark class="k">has not told her</mark> about Eddie.</li></ul>
     </article>
     <article class="card person">
       <div class="top"><div class="av" style="background:#555F7D">B</div><div><h3>Buddy Zabriskie</h3><p class="role">Daphne and Leda’s father</p></div></div>
       <span class="tag then">Mostly then</span>
-      <ul><li>Behind on child support. He barely takes the girls for weekends.</li><li>He was dying of melanoma in the hospital where Jonathan worked. That is how Daphne met Jonathan.</li></ul>
+      <ul><li><mark class="k">Behind on child support</mark>. He barely takes the girls for weekends.</li><li>He was dying of <mark class="k">melanoma</mark> in the hospital where Jonathan worked. That is how Daphne met Jonathan.</li></ul>
     </article>
   </div>
 </section>
@@ -364,42 +403,42 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
 <!-- 4 WORDS AND QUOTES -->
 <section class="step" id="close">
   <div class="sec-head"><span class="badge">Step 4 · 10 min</span><h2>Close reading: quotes and words</h2></div>
-  <p class="intro">Take a few minutes on six lines from the chapter. Tap “Think about it” for a question. Use “Add to notes” to save a line to your notes.</p>
+  <p class="intro">Take a few minutes on <b>six lines</b> from the chapter. Tap “Think about it” for a question. Use “Add to notes” to save a line to your notes.</p>
   <div class="quotes">
     <article class="card quote">
       <blockquote>If you took the time to notice the people around you, chances were you’d see some of them again in a different wing.</blockquote>
       <p class="ctx">Opening of the chapter, at the museum</p>
-      <div class="reveal" hidden>The museum has “wings,” and the chapter has two time layers. Does this sentence hint at what will happen? What does it say about noticing people?</div>
+      <div class="reveal" hidden>The museum has <mark class="k">“wings,”</mark> and the chapter has <mark class="k">two time layers</mark>. Does this sentence hint at what will happen? What does it say about noticing people?</div>
       <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
     </article>
     <article class="card quote">
       <blockquote>…our hearts were forever stitched together, mine and Eddie’s.</blockquote>
       <p class="ctx">Daphne in the elevator, right after she recognizes Eddie</p>
-      <div class="reveal" hidden>“Stitched” is a sewing word. It suggests a bond that can be pulled but not easily undone. Why is the word more interesting than “connected”?</div>
+      <div class="reveal" hidden>“Stitched” is <mark class="k">a sewing word</mark>. It suggests a bond that can be pulled but <mark class="k">not easily undone</mark>. Why is the word more interesting than “connected”?</div>
       <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
     </article>
     <article class="card quote">
       <blockquote>Because I had loved him and I had ruined his life.</blockquote>
       <p class="ctx">Daphne explains why she cried</p>
-      <div class="reveal" hidden>The sentence has two parts joined by “and.” Why does she put love and ruin side by side? Does it sound like a fact or a feeling?</div>
+      <div class="reveal" hidden>The sentence has two parts joined by “and.” Why does she put <mark class="k">love and ruin</mark> side by side? Does it sound like a fact or a feeling?</div>
       <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
     </article>
     <article class="card quote">
       <blockquote>Mom isn’t a fan of conflicting narratives. She’s married to Lucas, period.</blockquote>
       <p class="ctx">Leda, after the museum</p>
-      <div class="reveal" hidden>A “narrative” is a version of a story. What is Leda saying about the way their mother handles the past? Is Daphne also choosing her own version of the story?</div>
+      <div class="reveal" hidden>A “narrative” is <mark class="k">a version of a story</mark>. What is Leda saying about the way their mother handles the past? Is Daphne also choosing her own version of the story?</div>
       <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
     </article>
     <article class="card quote">
       <blockquote>Daphne had been saved, but she was always going to be a tree, a virtuous tree…</blockquote>
       <p class="ctx">Daphne thinks about her name and her sister’s</p>
-      <div class="reveal" hidden>In the myth, Daphne is turned into a tree to escape a god. Is being saved a gift here, or also a limit? How does Daphne seem to see herself?</div>
+      <div class="reveal" hidden>In the myth, Daphne is turned into a tree to escape a god. Is being saved <mark class="k">a gift</mark>, or also <mark class="k">a limit</mark>? How does Daphne seem to see herself?</div>
       <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
     </article>
     <article class="card quote">
       <blockquote>Eddie Triplett had not killed a child, nor would he ever again in his life love another person as much as he loved her.</blockquote>
       <p class="ctx">The last lines of the chapter</p>
-      <div class="reveal" hidden>The sentence first tells us what did not happen. Why start with that? Is the second half of the sentence happy, sad, or both?</div>
+      <div class="reveal" hidden>The sentence first tells us <mark class="k">what did not happen</mark>. Why start with that? Is the second half of the sentence happy, sad, or both?</div>
       <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
     </article>
   </div>
@@ -422,7 +461,7 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
 <!-- 5 DISCUSS -->
 <section class="step" id="discuss">
   <div class="sec-head"><span class="badge">Step 5 · 15 min</span><h2>Let’s discuss</h2></div>
-  <p class="intro">Four big ideas run through the chapter. Tap one to see the evidence, then use it in the questions below.</p>
+  <p class="intro">Four <b>big ideas</b> run through the chapter. Tap one to see the evidence, then use it in the questions below.</p>
   <div class="ideas" role="group" aria-label="Big ideas">
     <button class="idea" type="button" aria-pressed="false" data-i="0">Recognition</button>
     <button class="idea" type="button" aria-pressed="false" data-i="1">Guilt and child logic</button>
@@ -430,31 +469,32 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
     <button class="idea" type="button" aria-pressed="false" data-i="3">Family you choose</button>
   </div>
   <div class="idea-panel" id="ideaPanel" aria-live="polite"><p>Tap an idea above.</p></div>
+  <div class="ideas-print" id="ideasPrint"></div>
 
-  <p class="tip">You do not need every question. Choose the ones your group likes. Tick a question when you have talked about it.</p>
+  <p class="tip">You do not need every question. Choose <b>the ones your group likes</b>. Tick a question when you have talked about it.</p>
   <div class="progress"><span id="progTxt">0 of 11 discussed</span><div class="bar"><i id="progBar"></i></div></div>
 
   <div class="round">
     <h3>Round 1 · Understanding <small>about 3 min</small></h3>
-    <div class="q"><span class="qn">1</span><div class="qt">Who is Eddie Triplett, and how is he connected to Daphne and Leda?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Think about his job, his marriage to Abigail, how long it lasted, and why Daphne did not know him at first.</div></div></div>
-    <div class="q"><span class="qn">2</span><div class="qt">The chapter has two time layers. When and where is each one?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Look for the date and place that start the second layer: Friday, January 18, 1980, Winchester, Massachusetts.</div></div></div>
-    <div class="q"><span class="qn">3</span><div class="qt">What happened to Leda in 1980, and how did Eddie help?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Eddie’s advice was to push a little on the right side of her stomach. If she screamed, go to the ER.</div></div></div>
+    <div class="q"><span class="qn">1</span><div class="qt">Who is <mark class="k">Eddie Triplett</mark>, and how is he connected to Daphne and Leda?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Think about his job, his marriage to Abigail, how long it lasted, and why Daphne did not know him at first.</div></div></div>
+    <div class="q"><span class="qn">2</span><div class="qt">The chapter has <mark class="k">two time layers</mark>. When and where is each one?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Look for the date and place that start the second layer: Friday, January 18, 1980, Winchester, Massachusetts.</div></div></div>
+    <div class="q"><span class="qn">3</span><div class="qt">What happened to <mark class="k">Leda</mark> in 1980, and how did <mark class="k">Eddie</mark> help?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Eddie’s advice was to push a little on the right side of her stomach. If she screamed, go to the ER.</div></div></div>
   </div>
 
   <div class="round">
     <h3>Round 2 · Digging deeper <small>about 8 min</small></h3>
-    <div class="q"><span class="qn">4</span><div class="qt">Daphne “never cries,” yet she cries when she recognizes Eddie. Then the elevator doors close and the crying stops. What do you think she is feeling?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>She says their hearts were “forever stitched together.” What might change when the doors shut and she is in public again?</div></div></div>
-    <div class="q"><span class="qn">5</span><div class="qt">Eddie felt he knew Daphne before he knew why. Daphne knew his voice before his face. How do we recognize people we have not seen for decades?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Compare the voice, the face, and the feeling. Which one lasts longest for you?</div></div></div>
-    <div class="q"><span class="qn">6</span><div class="qt">Daphne believes she ruined Eddie’s life, but she was only a child. Leda says, “Logic doesn’t have anything to do with it.” Can guilt be real even when it is not logical?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>The narrator says, “In the way of all children, I believed the fault for their divorce was mine.” Why do children blame themselves?</div></div></div>
-    <div class="q"><span class="qn">7</span><div class="qt">Daphne told Jonathan that her mother was driving during the accident. Later she says she never found the right moment to correct herself. Is this a lie, a simplification, or a way to protect herself?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>She says she did not tell Jonathan about Eddie when they first met, and later Jonathan became “True-Love Jonathan.” What makes it harder to correct a story over time?</div></div></div>
-    <div class="q"><span class="qn">8</span><div class="qt">Jonathan walks Daphne across the park, and she realizes he does it to keep her from getting lost. On the walk he also says, “Of the three, the best one got away.” What kind of man is Jonathan?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>He compares her father, her stepfather and Eddie. Can you judge a person from one lunch? Why might Jonathan say this?</div></div></div>
+    <div class="q"><span class="qn">4</span><div class="qt">Daphne “never cries,” yet she <mark class="k">cries</mark> when she recognizes Eddie. Then the elevator doors close and <mark class="k">the crying stops</mark>. What do you think she is feeling?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>She says their hearts were “forever stitched together.” What might change when the doors shut and she is in public again?</div></div></div>
+    <div class="q"><span class="qn">5</span><div class="qt">Eddie felt he knew Daphne <mark class="k">before he knew why</mark>. Daphne knew <mark class="k">his voice before his face</mark>. How do we recognize people we have not seen for decades?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Compare the voice, the face, and the feeling. Which one lasts longest for you?</div></div></div>
+    <div class="q"><span class="qn">6</span><div class="qt">Daphne believes she ruined Eddie’s life, but she was <mark class="k">only a child</mark>. Leda says, “Logic doesn’t have anything to do with it.” Can <mark class="k">guilt</mark> be real even when it is <mark class="k">not logical</mark>?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>The narrator says, “In the way of all children, I believed the fault for their divorce was mine.” Why do children blame themselves?</div></div></div>
+    <div class="q"><span class="qn">7</span><div class="qt">Daphne told Jonathan that <mark class="k">her mother was driving</mark> during the accident. Later she says she never found the right moment to correct herself. Is this <mark class="k">a lie</mark>, <mark class="k">a simplification</mark>, or <mark class="k">a way to protect herself</mark>?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>She says she did not tell Jonathan about Eddie when they first met, and later Jonathan became “True-Love Jonathan.” What makes it harder to correct a story over time?</div></div></div>
+    <div class="q"><span class="qn">8</span><div class="qt">Jonathan walks Daphne across the park, and she realizes he does it to <mark class="k">keep her from getting lost</mark>. On the walk he also says, “Of the three, <mark class="k">the best one got away</mark>.” What kind of man is Jonathan?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>He compares her father, her stepfather and Eddie. Can you judge a person from one lunch? Why might Jonathan say this?</div></div></div>
   </div>
 
   <div class="round">
     <h3>Round 3 · The big picture <small>about 4 min</small></h3>
-    <div class="q"><span class="qn">9</span><div class="qt">The chapter ends in the middle of the crash. Why might the author stop there, and what do you want to know next?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>The last lines tell us what did not happen. How does that change the feeling of the ending?</div></div></div>
-    <div class="q"><span class="qn">10</span><div class="qt">About the drive, the narrator says that “there was no logic. Stop looking for it.” Have you ever done something without a reason that became an important memory?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Daphne thinks a trip like this was “the kind of thing Daphne only could have done with Eddie.” What does that say about him, and about her mother?</div></div></div>
-    <div class="q"><span class="qn">11</span><div class="qt">Leda was named for a girl in a myth, and Daphne for another. Daphne says she is “a virtuous tree.” Do you think names shape who we become?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Both myths are about girls in danger from gods. One is saved by being turned into a tree. How does Daphne describe herself, and how does she describe Leda?</div></div></div>
+    <div class="q"><span class="qn">9</span><div class="qt">The chapter ends <mark class="k">in the middle of the crash</mark>. Why might the author stop there, and what do you want to know next?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>The last lines tell us what did not happen. How does that change the feeling of the ending?</div></div></div>
+    <div class="q"><span class="qn">10</span><div class="qt">About the drive, the narrator says that “<mark class="k">there was no logic</mark>. Stop looking for it.” Have you ever done something without a reason that became an important memory?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Daphne thinks a trip like this was “the kind of thing Daphne only could have done with Eddie.” What does that say about him, and about her mother?</div></div></div>
+    <div class="q"><span class="qn">11</span><div class="qt">Leda was named for a girl in a myth, and Daphne for another. Daphne says she is “a virtuous tree.” Do you think <mark class="k">names shape who we become</mark>?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Both myths are about girls in danger from gods. One is saved by being turned into a tree. How does Daphne describe herself, and how does she describe Leda?</div></div></div>
   </div>
 
   <div class="card bonus">
@@ -486,13 +526,15 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
 <!-- 6 WRAP-UP -->
 <section class="step" id="wrapup">
   <div class="sec-head"><span class="badge">Step 6 · 5 min</span><h2>Wrap-up</h2></div>
-  <p class="intro">Finish with one word each, then write a prediction in your notes.</p>
+  <p class="intro">Finish with <b>one word</b> each, then write a <b>prediction</b> in your notes.</p>
   <div class="wrapgrid">
-    <div class="card"><h3>One word round</h3><ul><li>Describe Chapter 1 in one word.</li><li>Who would you most like to talk to: Daphne, Eddie, Leda or Jonathan?</li></ul></div>
-    <div class="card"><h3>Make a prediction</h3><ul><li>Daphne says her mother “managed something so heroic that there should have been songs written about her.” What do you think it was?</li><li>Will Daphne tell her mother about Eddie?</li><li>What do you expect Eddie to do next?</li></ul><div class="pick-bar"><button class="btn small" id="predNote" type="button">Add these to my notes</button></div></div>
+    <div class="card"><h3>One word round</h3><ul><li>Describe Chapter 1 in <mark class="k">one word</mark>.</li><li>Who would you most like to talk to: Daphne, Eddie, Leda or Jonathan?</li></ul></div>
+    <div class="card"><h3>Make a prediction</h3><ul><li>Daphne says her mother “<mark class="k">managed something so heroic</mark> that there should have been songs written about her.” What do you think it was?</li><li>Will Daphne tell her mother about Eddie?</li><li>What do you expect Eddie to do next?</li></ul><div class="pick-bar"><button class="btn small" id="predNote" type="button">Add these to my notes</button></div></div>
     <div class="card locked"><span class="label">Next time</span><h3>Part 2 · coming soon</h3><p>We will start by checking our predictions.</p></div>
   </div>
 </section>
+
+<section class="print-notes" id="printNotes"><h2>My notes</h2><div class="pn-body" id="pnBody"></div></section>
 
 </main>
 
@@ -517,7 +559,7 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
     <button type="button" class="sw none" data-h="transparent" title="Remove highlight" aria-label="Remove highlight"><i></i></button>
   </div>
   <div class="editor" id="editor" contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Notes"></div>
-  <div class="dfoot"><span class="st" id="st">Saved on this device</span><button class="btn ghost small" id="copyN" type="button">Copy notes</button><button class="btn ghost small" id="clearN" type="button">Clear all</button></div>
+  <div class="dfoot"><span class="st" id="st">Saved on this device</span><button class="btn small" id="savePdf" type="button">Save PDF</button><button class="btn ghost small" id="clearN" type="button">Clear all</button></div>
 </aside>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -576,10 +618,10 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
 
   /* big ideas */
   var ideas=[
-    "<b>Recognition.</b> Jonathan sees Eddie first. Eddie says, “I knew you were someone I knew.” Daphne knows his voice. The opening line says you might see the same people “in a different wing.”",
-    "<b>Guilt and child logic.</b> Daphne was a young child in 1980 and still thinks she ruined Eddie’s life. She says children always think a divorce is their fault. Leda’s answer: “Logic doesn’t have anything to do with it.”",
-    "<b>Whose version of the story?</b> Daphne told Jonathan her mother was driving. Leda says their mother dislikes “conflicting narratives.” Daphne has not told her mother about Eddie.",
-    "<b>Family you choose.</b> Eddie was a stepfather for only fourteen months, but it was a large part of the girls’ young lives. He took the “whole package.” Jonathan’s care for Daphne is another kind of chosen love."
+    "<b>Recognition.</b> Jonathan sees Eddie first. Eddie says, “I knew you were someone I knew.” Daphne knows <mark class='k'>his voice</mark>. The opening line says you might see the same people “in a different wing.”",
+    "<b>Guilt and child logic.</b> Daphne was a young child in 1980 and still thinks she <mark class='k'>ruined Eddie’s life</mark>. She says children always think a divorce is their fault. Leda’s answer: “Logic doesn’t have anything to do with it.”",
+    "<b>Whose version of the story?</b> Daphne told Jonathan <mark class='k'>her mother was driving</mark>. Leda says their mother dislikes <mark class='k'>“conflicting narratives.”</mark> Daphne has not told her mother about Eddie.",
+    "<b>Family you choose.</b> Eddie was a stepfather for only <mark class='k'>fourteen months</mark>, but it was a large part of the girls’ young lives. He took <mark class='k'>the “whole package.”</mark> Jonathan’s care for Daphne is another kind of chosen love."
   ];
   var ib=$$(".idea"), ip=$("#ideaPanel");
   ib.forEach(function(b){b.addEventListener("click",function(){
@@ -636,10 +678,16 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
   $("#predNote").addEventListener("click",function(){
     addToNotes('<h3>Predictions for Part 2</h3><ul><li>What did the mother do that was heroic?</li><li>Will Daphne tell her mother about Eddie?</li><li>What will Eddie do next?</li></ul>');});
 
-  $("#copyN").addEventListener("click",function(){
-    var txt=ed.innerText;
-    function fallback(){var r=document.createRange();r.selectNodeContents(ed);var s=window.getSelection();s.removeAllRanges();s.addRange(r);toast("Notes selected. Press Ctrl+C or Cmd+C.")}
-    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){toast("Notes copied")},fallback)}else{fallback()}
+  var pn=$("#printNotes"), pnb=$("#pnBody"), origTitle=document.title;
+  var ipr=$("#ideasPrint");ipr.innerHTML=ideas.map(function(t){return "<p>"+t+"</p>"}).join("");
+  window.addEventListener("beforeprint",function(){
+    pnb.innerHTML=ed.innerHTML;pn.classList.toggle("has",ed.innerText.trim().length>0);
+    origTitle=document.title;document.title="Whistler - Chapter 1 slides and notes";
+  });
+  window.addEventListener("afterprint",function(){document.title=origTitle});
+  $("#savePdf").addEventListener("click",function(){
+    toast("In the print window, choose Save as PDF");
+    setTimeout(function(){try{window.print()}catch(e){}},350);
   });
   var cl=$("#clearN"),ct;
   cl.addEventListener("click",function(){
