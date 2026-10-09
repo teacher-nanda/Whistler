@@ -19,20 +19,21 @@
   --sans:"Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
   --shadow:0 6px 24px rgba(21,26,51,.10);
   --mark:#FFE7A0;
+  --ok:#1B7A48; --ok-soft:#D6F0E2; --bad:#B3261E; --bad-soft:#FADBD8;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#0B0F20; --surface:#141A38; --surface2:#1C2447; --ink:#E9ECF8; --muted:#A7AFCC; --line:#2B3463;
     --accent:#F2708F; --accent-ink:#1B0710; --accent-soft:#3A1A2A;
     --now:#E9B25A; --now-soft:#3A2D14; --then:#8FA2F2; --then-soft:#1F2850;
-    --shadow:0 6px 24px rgba(0,0,0,.4); --mark:#5C4A12; color-scheme:dark;
+    --shadow:0 6px 24px rgba(0,0,0,.4); --mark:#5C4A12; --ok:#6FD39B; --ok-soft:#153A29; --bad:#F2877F; --bad-soft:#43211F; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#0B0F20; --surface:#141A38; --surface2:#1C2447; --ink:#E9ECF8; --muted:#A7AFCC; --line:#2B3463;
   --accent:#F2708F; --accent-ink:#1B0710; --accent-soft:#3A1A2A;
   --now:#E9B25A; --now-soft:#3A2D14; --then:#8FA2F2; --then-soft:#1F2850;
-  --shadow:0 6px 24px rgba(0,0,0,.4); --mark:#5C4A12; color-scheme:dark;
+  --shadow:0 6px 24px rgba(0,0,0,.4); --mark:#5C4A12; --ok:#6FD39B; --ok-soft:#153A29; --bad:#F2877F; --bad-soft:#43211F; color-scheme:dark;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:84px}
@@ -42,7 +43,8 @@ p{margin:0}
 button{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
 .wrap{max-width:1080px;margin-inline:auto;padding-inline:20px}
-mark.k{background:var(--mark);color:inherit;border-radius:4px;padding:0 .2em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+mark.k{background:var(--mark);color:inherit;border-radius:4px;padding:0 .1em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+p,li,.qt,.gt,.fb,.hint,.reveal{text-wrap:pretty}
 .label{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
 
 /* HERO */
@@ -63,8 +65,8 @@ mark.k{background:var(--mark);color:inherit;border-radius:4px;padding:0 .2em;-we
 .agenda{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
 .agenda-scroll{overflow-x:auto;scrollbar-width:thin}
 .agenda ol{list-style:none;margin:0;padding:0;display:flex;min-width:max-content}
-.agenda li{flex:1 0 auto}
-.agenda a{display:flex;align-items:baseline;gap:9px;padding:12px 20px;text-decoration:none;color:var(--muted);border-bottom:4px solid transparent;font-weight:700;white-space:nowrap}
+.agenda li{flex:1 1 auto}
+.agenda a{display:flex;align-items:baseline;gap:9px;padding:12px 16px;justify-content:center;text-decoration:none;color:var(--muted);border-bottom:4px solid transparent;font-weight:700;white-space:nowrap}
 .agenda a .n{font-family:var(--serif);font-size:1.15rem;color:var(--accent)}
 .agenda a .m{font-size:.8rem;font-weight:400;opacity:.85}
 .agenda a:hover{color:var(--ink)}
@@ -92,7 +94,7 @@ section.step{padding-block:68px 8px}
 /* STORY */
 .sixty{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:34px}
 .sixty .card{padding:18px 20px}
-.sixty b{display:block;font-family:var(--serif);font-weight:400;font-size:1.25rem;margin-bottom:4px}
+.sixty .lead{display:block;font-family:var(--serif);font-weight:400;font-size:1.25rem;margin-bottom:4px}
 .lanes{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .lane{border-radius:16px;padding:26px 24px 20px;border:1px solid var(--line)}
 .lane.now{background:var(--now-soft)}
@@ -107,7 +109,7 @@ section.step{padding-block:68px 8px}
 .beats li{position:relative;color:var(--ink);padding-bottom:16px}
 .beats li::before{content:"";position:absolute;left:-26px;top:7px;width:15px;height:15px;border-radius:50%;background:var(--surface);border:4px solid currentColor}
 .lane.now .beats li::before{border-color:var(--now)} .lane.then .beats li::before{border-color:var(--then)}
-.beats b{display:block}
+.beats .lead{display:block}
 .bridge{text-align:center;margin:22px 0 0;color:var(--muted);font-size:1rem}
 .bridge strong{color:var(--accent)}
 
@@ -165,11 +167,34 @@ section.step{padding-block:68px 8px}
 .chk{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.92rem;cursor:pointer}
 .chk input{width:20px;height:20px;accent-color:var(--accent)}
 .tip{font-size:1rem;color:var(--muted);margin-bottom:18px}
+.game-head{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin:14px 0 16px}
+.steps{display:flex;flex-wrap:wrap;gap:8px}
+.steps span{padding:4px 14px;border-radius:99px;border:1.5px solid var(--line);font-size:.85rem;font-weight:700;color:var(--muted)}
+.steps span.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.steps span.done{background:var(--surface2);color:var(--ink)}
+.gscore{font-weight:700;font-variant-numeric:tabular-nums}
+.gq{display:grid;gap:12px;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:12px;transition:border-color .2s}
+.gq.ok{border-color:var(--ok)}.gq.bad{border-color:var(--bad)}
+.gq .gt{font-size:1.15rem;font-weight:700}
+.tfrow{display:flex;flex-wrap:wrap;gap:10px}
+.tf{flex:1 1 140px;min-height:50px;border-radius:12px;border:2px solid var(--line);background:var(--surface2);font-weight:700;font-size:1.05rem;transition:border-color .15s,transform .15s}
+.tf:hover:not(:disabled){border-color:var(--accent);transform:translateY(-2px)}
+.tf:disabled{cursor:default}
+.tf.pok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.tf.pbad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.tf.right{border-color:var(--ok);box-shadow:inset 0 0 0 2px var(--ok)}
+.fb{border-radius:10px;padding:12px 14px;background:var(--surface2);font-size:1rem}
+.fb.ok{background:var(--ok-soft)}.fb.bad{background:var(--bad-soft)}
+.fb .vr{font-weight:700;margin-right:6px}
+.fb.ok .vr{color:var(--ok)}.fb.bad .vr{color:var(--bad)}
+.gsum{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;justify-content:space-between;background:var(--accent-soft);border-radius:12px;padding:14px 18px;margin-top:6px}
+.gsum .gres{font-family:var(--serif);font-size:1.3rem}
+.gfinal{text-align:center;padding:26px 16px}
+.gfinal .big{font-family:var(--serif);font-size:3.2rem;line-height:1.1;color:var(--accent)}
+.gfinal p{margin:6px 0 16px}
+.pr-only{display:none}
 .bonus{margin-top:36px}
 .bonus h3{font-size:1.7rem;margin-bottom:6px}
-.tol{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:16px}
-.tol ol{margin:0 0 14px;padding-left:22px;display:grid;gap:8px}
-.tol .ans{background:var(--surface2);border-radius:10px;padding:12px 14px;font-size:1rem}
 
 /* WRAP */
 .wrapgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
@@ -217,7 +242,7 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
 .print-notes{display:none}
 @media print{
   @page{size:A4;margin:12mm}
-  html:root:root:root{--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#EEF1F8;--ink:#151A33;--muted:#4F5775;--line:#C9D0E6;--accent:#B0214D;--accent-ink:#FFFFFF;--accent-soft:#F8DDE6;--now:#B7791F;--now-soft:#FBEBCB;--then:#3F57C0;--then-soft:#DDE3F8;--shadow:none;--mark:#FFE7A0;color-scheme:light}
+  html:root:root:root{--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#EEF1F8;--ink:#151A33;--muted:#4F5775;--line:#C9D0E6;--accent:#B0214D;--accent-ink:#FFFFFF;--accent-soft:#F8DDE6;--now:#B7791F;--now-soft:#FBEBCB;--then:#3F57C0;--then-soft:#DDE3F8;--shadow:none;--mark:#FFE7A0;--ok:#1B7A48;--ok-soft:#D6F0E2;--bad:#B3261E;--bad-soft:#FADBD8;color-scheme:light}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact;box-shadow:none !important}
   html{scroll-behavior:auto}
   body{font-size:14px;line-height:1.5}
@@ -229,15 +254,16 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
   section.step#warmup{break-before:auto;padding-top:22px}
   .sec-head h2{font-size:2rem}
   .intro{margin-bottom:16px}
-  .card,.q,.lane,.person,.flip,.quote,.tree,.round>h3{break-inside:avoid}
-  .reveal[hidden],.hint[hidden],.ans[hidden]{display:block !important}
+  .card,.q,.lane,.person,.flip,.quote,.tree,.round>h3,.gq{break-inside:avoid}
+  .reveal[hidden],.hint[hidden],.fb[hidden],.gr[hidden]{display:block !important}
+  .gr[data-r="3"],.gsum,.steps,.gscore,.tf{display:none !important}
+  .pr-only{display:block;margin:8px 0}
   .reveal,.q .hint,.ans{margin-top:2px}
   .flip .front[hidden],.flip .back[hidden]{display:block !important}
   .flip{min-height:0;padding:10px 14px}
   .flip .w{font-size:1.15rem}
   .flip .front,.flip .back{display:block}
   .flip[aria-pressed="true"]{background:var(--surface);border-color:var(--line)}
-  .tol .ans{margin-top:8px}
   .q.done{opacity:1}.q.done .qt{text-decoration:none}
   .print-notes{display:none;break-before:page}
   .print-notes.has{display:block}
@@ -289,12 +315,12 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
 <nav class="agenda" aria-label="Lesson plan">
   <div class="agenda-scroll wrap">
     <ol>
-      <li><a href="#warmup" data-s="warmup"><span class="n">1</span>Warm-up <span class="m">5 min</span></a></li>
-      <li><a href="#story" data-s="story"><span class="n">2</span>The story <span class="m">8 min</span></a></li>
-      <li><a href="#people" data-s="people"><span class="n">3</span>The people <span class="m">7 min</span></a></li>
-      <li><a href="#close" data-s="close"><span class="n">4</span>Words &amp; quotes <span class="m">10 min</span></a></li>
-      <li><a href="#discuss" data-s="discuss"><span class="n">5</span>Discuss <span class="m">15 min</span></a></li>
-      <li><a href="#wrapup" data-s="wrapup"><span class="n">6</span>Wrap-up <span class="m">5 min</span></a></li>
+      <li><a href="#warmup" data-s="warmup"><span class="n">1</span>Warm-up</a></li>
+      <li><a href="#story" data-s="story"><span class="n">2</span>The story</a></li>
+      <li><a href="#people" data-s="people"><span class="n">3</span>The people</a></li>
+      <li><a href="#close" data-s="close"><span class="n">4</span>Words &amp; quotes</a></li>
+      <li><a href="#discuss" data-s="discuss"><span class="n">5</span>Discuss</a></li>
+      <li><a href="#wrapup" data-s="wrapup"><span class="n">6</span>Wrap-up</a></li>
     </ol>
   </div>
 </nav>
@@ -318,31 +344,31 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
   <div class="sec-head"><span class="badge">Step 2 · 8 min</span><h2>The story in two time layers</h2></div>
   <p class="intro">The chapter jumps between the <mark class="k">present day</mark> and one <mark class="k">Friday in 1980</mark>. Keep both layers in mind.</p>
   <div class="sixty">
-    <div class="card"><b>The surprise</b>In New York, Daphne and her husband Jonathan meet an old man who has been watching them. He is <b>Eddie Triplett</b>, her <mark class="k">stepfather</mark> from long ago.</div>
-    <div class="card"><b>The wound</b>Daphne cried when she realized who he was. She tells her sister Leda she believes she <mark class="k">ruined Eddie’s life</mark>.</div>
-    <div class="card"><b>The flashback</b>We go back to <b>January 1980</b>. Leda is sick, Eddie helps, and a night drive with Daphne ends with <mark class="k">the car leaving the road</mark>.</div>
+    <div class="card"><b class="lead">The surprise</b>In New York, Daphne and her husband Jonathan meet an old man who has been watching them. He is <b>Eddie Triplett</b>, her <mark class="k">stepfather</mark> from long ago.</div>
+    <div class="card"><b class="lead">The wound</b>Daphne cried when she realized who he was. She tells her sister Leda she believes she <mark class="k">ruined Eddie’s life</mark>.</div>
+    <div class="card"><b class="lead">The flashback</b>We go back to <b>January 1980</b>. Leda is sick, Eddie helps, and a night drive with Daphne ends with <mark class="k">the car leaving the road</mark>.</div>
   </div>
   <div class="lanes">
     <div class="lane now">
       <p class="where">Now · New York City</p>
       <h3>Daphne is 53</h3>
       <ol class="beats">
-        <li><b>At the Met</b>Jonathan whispers that an old man <mark class="k">keeps looking at Daphne</mark>. He leaves the next day on what might be a long trip.</li>
-        <li><b>“This is your stepfather”</b>Jonathan talks to the man. Daphne knows <mark class="k">his voice before his face</mark>: <b>Eddie Triplett</b>.</li>
-        <li><b>Lunch</b>They <mark class="k">catch up</mark> on jobs, children and books. Eddie offers his number from a tiny notebook but <mark class="k">will not take hers</mark>.</li>
-        <li><b>The walk across the park</b>Jonathan goes with Daphne to Leda’s building. She realizes he <mark class="k">does not want her to get lost</mark>.</li>
-        <li><b>Daphne and Leda</b>Why did she cry? “Because I had loved him and I had ruined his life.” They talk about <mark class="k">the car accident</mark>.</li>
+        <li><b class="lead">At the Met</b>Jonathan whispers that an old man <mark class="k">keeps looking at Daphne</mark>. He leaves the next day on what might be a long trip.</li>
+        <li><b class="lead">“This is your stepfather”</b>Jonathan talks to the man. Daphne knows <mark class="k">his voice before his face</mark>: <b>Eddie Triplett</b>.</li>
+        <li><b class="lead">Lunch</b>They <mark class="k">catch up</mark> on jobs, children and books. Eddie offers his number from a tiny notebook but <mark class="k">will not take hers</mark>.</li>
+        <li><b class="lead">The walk across the park</b>Jonathan goes with Daphne to Leda’s building. She realizes he <mark class="k">does not want her to get lost</mark>.</li>
+        <li><b class="lead">Daphne and Leda</b>Why did she cry? “Because I had loved him and I had ruined his life.” They talk about <mark class="k">the car accident</mark>.</li>
       </ol>
     </div>
     <div class="lane then">
       <p class="where">Then · Winchester, Massachusetts</p>
       <h3>Friday, January 18, 1980</h3>
       <ol class="beats">
-        <li><b>Leda is sick at school</b>The nurse calls Abigail, their mother, who works at a publisher with Eddie. Eddie <mark class="k">covers for her</mark> at the office.</li>
-        <li><b>“Make sure it’s not appendicitis”</b>Eddie tells Abigail how to check. Leda <mark class="k">screams</mark> when Abigail touches her stomach, and she goes into <b>surgery</b>.</li>
-        <li><b>Eddie and Daphne</b>Eddie picks up Daphne, packs bags, and they visit the hospital. Leda <mark class="k">sleeps through it</mark>.</li>
-        <li><b>A drive with no purpose</b>Leaving the hospital, Eddie takes Daphne on a drive that <mark class="k">nobody can explain</mark> later. They <mark class="k">switch off the headlights</mark> to see the stars.</li>
-        <li><b>The edge of the road</b>The car goes off the road into the dark. Eddie’s one question: is Daphne wearing her <mark class="k">seat belt</mark>?</li>
+        <li><b class="lead">Leda is sick at school</b>The nurse calls Abigail, their mother, who works at a publisher with Eddie. Eddie <mark class="k">covers for her</mark> at the office.</li>
+        <li><b class="lead">“Make sure it’s not appendicitis”</b>Eddie tells Abigail how to check. Leda <mark class="k">screams</mark> when Abigail touches her stomach, and she goes into <b>surgery</b>.</li>
+        <li><b class="lead">Eddie and Daphne</b>Eddie picks up Daphne, packs bags, and they visit the hospital. Leda <mark class="k">sleeps through it</mark>.</li>
+        <li><b class="lead">A drive with no purpose</b>Leaving the hospital, Eddie takes Daphne on a drive that <mark class="k">nobody can explain</mark> later. They <mark class="k">switch off the headlights</mark> to see the stars.</li>
+        <li><b class="lead">The edge of the road</b>The car goes off the road into the dark. Eddie’s one question: is Daphne wearing her <mark class="k">seat belt</mark>?</li>
       </ol>
     </div>
   </div>
@@ -482,28 +508,52 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
     <div class="q"><span class="qn">11</span><div class="qt">Leda was named for a girl in a myth, and Daphne for another. Daphne says she is “a virtuous tree.” Do you think <mark class="k">names shape who we become</mark>?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Both myths are about girls in danger from gods. One is saved by being turned into a tree. How does Daphne describe herself, and how does she describe Leda?</div></div></div>
   </div>
 
-  <div class="card bonus">
-    <h3>Bonus game: truth or lie?</h3>
-    <p class="tip" style="margin:0">Use it only if there is time. Read the three statements. One is false. Tap to check.</p>
-    <div class="tol">
-      <div>
-        <ol>
-          <li>Eddie and Daphne’s mother worked at the same publisher in Boston.</li>
-          <li>Daphne met Jonathan because her father was a patient at the hospital where he worked.</li>
-          <li>Daphne recognized Eddie the moment she saw him at the museum.</li>
-        </ol>
-        <button class="btn ghost small tolbtn" type="button" aria-expanded="false">Show the answer</button>
-        <div class="ans" hidden><b>Statement 3 is false.</b> Jonathan noticed Eddie first, and Daphne shook her head when he asked if she knew him. She recognized the voice later.</div>
+  <div class="card bonus" id="game">
+    <h3>Bonus game: true or false?</h3>
+    <p class="tip" style="margin:0">Read each sentence and tap <b>True</b> or <b>False</b>. You see the answer right away. Two rounds, three sentences each.</p>
+    <div class="game-head"><div class="steps" id="gSteps"><span class="on" data-r="1">Round 1</span><span data-r="2">Round 2</span><span data-r="3">Final score</span></div><div class="gscore" id="gScore">Score: 0 / 6</div></div>
+    <div class="gr" data-r="1">
+      <p class="pr-only label">Round 1</p>
+      <div class="gq" data-a="false">
+        <p class="gt">1. Daphne recognized Eddie the moment she saw him at the museum.</p>
+        <div class="tfrow"><button class="tf" type="button" data-v="true">True</button><button class="tf" type="button" data-v="false">False</button></div>
+        <div class="fb" hidden aria-live="polite"><span class="vr"></span><b>The answer is false.</b> Jonathan noticed him first. When he asked, Daphne shook her head. She knew <mark class="k">his voice</mark> before his face.</div>
       </div>
-      <div>
-        <ol>
-          <li>Leda’s appendix ruptured during surgery.</li>
-          <li>Eddie and Daphne had a clear plan for their night drive.</li>
-          <li>Eddie and Abigail had been married for fourteen months.</li>
-        </ol>
-        <button class="btn ghost small tolbtn" type="button" aria-expanded="false">Show the answer</button>
-        <div class="ans" hidden><b>Statement 2 is false.</b> No one could find a purpose for the trip. In the narrator’s words, “there was no logic.”</div>
+      <div class="gq" data-a="true">
+        <p class="gt">2. Eddie and Daphne’s mother worked at the same publisher in Boston.</p>
+        <div class="tfrow"><button class="tf" type="button" data-v="true">True</button><button class="tf" type="button" data-v="false">False</button></div>
+        <div class="fb" hidden aria-live="polite"><span class="vr"></span><b>The answer is true.</b> They both worked at <mark class="k">Houghton Mifflin</mark>, and that is where they met.</div>
       </div>
+      <div class="gq" data-a="true">
+        <p class="gt">3. Daphne met Jonathan because her father was a patient at the hospital where he worked.</p>
+        <div class="tfrow"><button class="tf" type="button" data-v="true">True</button><button class="tf" type="button" data-v="false">False</button></div>
+        <div class="fb" hidden aria-live="polite"><span class="vr"></span><b>The answer is true.</b> Her father was dying of <mark class="k">melanoma</mark> in the Gloucester hospital where Jonathan worked.</div>
+      </div>
+      <div class="gsum" hidden><p class="gres"></p><button class="btn gnext" type="button">Start Round 2</button></div>
+    </div>
+    <div class="gr" data-r="2" hidden>
+      <p class="pr-only label">Round 2</p>
+      <div class="gq" data-a="true">
+        <p class="gt">4. Leda’s appendix ruptured during surgery.</p>
+        <div class="tfrow"><button class="tf" type="button" data-v="true">True</button><button class="tf" type="button" data-v="false">False</button></div>
+        <div class="fb" hidden aria-live="polite"><span class="vr"></span><b>The answer is true.</b> It took the doctor <mark class="k">longer than expected</mark>, and Leda slept through the hospital visit.</div>
+      </div>
+      <div class="gq" data-a="false">
+        <p class="gt">5. Eddie and Daphne had a clear plan for their night drive.</p>
+        <div class="tfrow"><button class="tf" type="button" data-v="true">True</button><button class="tf" type="button" data-v="false">False</button></div>
+        <div class="fb" hidden aria-live="polite"><span class="vr"></span><b>The answer is false.</b> No one could find a purpose for the trip. In the narrator’s words, <mark class="k">“there was no logic.”</mark></div>
+      </div>
+      <div class="gq" data-a="true">
+        <p class="gt">6. Eddie and Abigail had been married for fourteen months.</p>
+        <div class="tfrow"><button class="tf" type="button" data-v="true">True</button><button class="tf" type="button" data-v="false">False</button></div>
+        <div class="fb" hidden aria-live="polite"><span class="vr"></span><b>The answer is true.</b> The marriage was short, but it was a big part of the girls’ young lives.</div>
+      </div>
+      <div class="gsum" hidden><p class="gres"></p><button class="btn gnext" type="button">See my final score</button></div>
+    </div>
+    <div class="gr gfinal" data-r="3" hidden>
+      <div class="big" id="gBig">0 / 6</div>
+      <p id="gMsg"></p>
+      <button class="btn" id="gAgain" type="button">Play again</button>
     </div>
   </div>
 </section>
@@ -511,9 +561,8 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
 <!-- 6 WRAP-UP -->
 <section class="step" id="wrapup">
   <div class="sec-head"><span class="badge">Step 6 · 5 min</span><h2>Wrap-up</h2></div>
-  <p class="intro">Finish with <b>one word</b> each, then write a <b>prediction</b> in your notes.</p>
+  <p class="intro">Write your <b>prediction</b> in your notes. We will check it next time.</p>
   <div class="wrapgrid">
-    <div class="card"><h3>One word round</h3><ul><li>Describe Chapter 1 in <mark class="k">one word</mark>.</li><li>Who would you most like to talk to: Daphne, Eddie, Leda or Jonathan?</li></ul></div>
     <div class="card"><h3>Make a prediction</h3><ul><li>Daphne says her mother “<mark class="k">managed something so heroic</mark> that there should have been songs written about her.” What do you think it was?</li><li>Will Daphne tell her mother about Eddie?</li><li>What do you expect Eddie to do next?</li></ul><div class="pick-bar"><button class="btn small" id="predNote" type="button">Add these to my notes</button></div></div>
     <div class="card locked"><span class="label">Next time</span><h3>Part 2 · coming soon</h3><p>We will start by checking our predictions.</p></div>
   </div>
@@ -523,7 +572,7 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
 
 </main>
 
-<footer class="wrap">Based on the club’s reading highlights from Chapter 1 of Whistler by Ann Patchett.</footer>
+<footer class="wrap">Based on the club’s reading highlights from Chapter 1 of Whistler by Ann Patchett. · Page version 13</footer>
 
 <!-- NOTES -->
 <button class="fab" id="fab" type="button" aria-controls="drawer" aria-expanded="false">
@@ -594,13 +643,48 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
   }
   bindToggle(".rv","Think about it","Hide",function(b){return $(".reveal",b.closest(".quote"))});
   bindToggle(".hn","Hint","Hide hint",function(b){return $(".hint",b.closest(".q"))});
-  bindToggle(".tolbtn","Show the answer","Hide answer",function(b){return b.nextElementSibling});
 
   /* flip cards */
   $$(".flip").forEach(function(f){f.addEventListener("click",function(){
     var on=f.getAttribute("aria-pressed")!=="true";f.setAttribute("aria-pressed",on);
     $(".front",f).hidden=on;$(".back",f).hidden=!on;})});
 
+
+
+  /* true or false game */
+  (function(){
+    var rs=$$("#game .gr"), pills=$$("#gSteps span"), scoreEl=$("#gScore"), score=0, cur=1;
+    function show(n){cur=n;rs.forEach(function(r){r.hidden=(+r.getAttribute("data-r")!==n)});
+      pills.forEach(function(p){var k=+p.getAttribute("data-r");p.classList.toggle("on",k===n);p.classList.toggle("done",k<n)})}
+    $$("#game .gq").forEach(function(q){
+      $$(".tf",q).forEach(function(b){b.addEventListener("click",function(){
+        if(q.getAttribute("data-done"))return;q.setAttribute("data-done","1");
+        var ans=q.getAttribute("data-a"), ok=b.getAttribute("data-v")===ans;
+        $$(".tf",q).forEach(function(x){x.disabled=true;if(x.getAttribute("data-v")===ans&&!ok)x.classList.add("right")});
+        b.classList.add(ok?"pok":"pbad");q.classList.add(ok?"ok":"bad");
+        var fb=$(".fb",q);fb.classList.add(ok?"ok":"bad");$(".vr",fb).textContent=ok?"Correct!":"Not quite.";fb.hidden=false;
+        if(ok){score++;scoreEl.textContent="Score: "+score+" / 6"}
+        var r=q.closest(".gr"), all=$$(".gq",r);
+        if(all.every(function(x){return x.getAttribute("data-done")})){
+          var c=all.filter(function(x){return x.classList.contains("ok")}).length;
+          var sm=$(".gsum",r);$(".gres",sm).textContent="Round "+r.getAttribute("data-r")+": "+c+" of 3 correct";sm.hidden=false;
+        }
+      })});
+    });
+    $$("#game .gnext").forEach(function(b){b.addEventListener("click",function(){
+      var n=cur+1;show(n);
+      if(n===3){$("#gBig").textContent=score+" / 6";
+        $("#gMsg").textContent=score===6?"Perfect! You read very carefully.":score>=4?"Great job! You remember the chapter well.":"Good try! Look at the story again and play one more time.";}
+      var g=$("#game");if(g.scrollIntoView)g.scrollIntoView({block:"start",behavior:"smooth"});
+    })});
+    $("#gAgain").addEventListener("click",function(){
+      score=0;scoreEl.textContent="Score: 0 / 6";
+      $$("#game .gq").forEach(function(q){q.removeAttribute("data-done");q.classList.remove("ok","bad");
+        $$(".tf",q).forEach(function(x){x.disabled=false;x.classList.remove("pok","pbad","right")});
+        var fb=$(".fb",q);fb.hidden=true;fb.classList.remove("ok","bad")});
+      $$("#game .gsum").forEach(function(x){x.hidden=true});show(1);
+    });
+  })();
 
   /* progress */
   var dn=$$(".dn"), pt=$("#progTxt"), pb=$("#progBar");
