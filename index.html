@@ -148,10 +148,6 @@ section.step{padding-block:68px 8px}
 .flip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
 
 /* DISCUSS */
-.ideas{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
-.idea{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 18px;font-weight:700}
-.idea[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.idea-panel{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--accent);border-radius:12px;padding:16px 20px;margin-bottom:26px;min-height:76px}
 .progress{display:flex;align-items:center;gap:14px;margin-bottom:22px;color:var(--muted);font-weight:700}
 .bar{flex:1;height:10px;background:var(--surface2);border-radius:99px;overflow:hidden;max-width:360px}
 .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
@@ -218,14 +214,14 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
   .q{grid-template-columns:1fr}.q .body{grid-column:1}
 }
 /* PRINT / SAVE AS PDF */
-.ideas-print,.print-notes{display:none}
+.print-notes{display:none}
 @media print{
   @page{size:A4;margin:12mm}
   html:root:root:root{--bg:#FFFFFF;--surface:#FFFFFF;--surface2:#EEF1F8;--ink:#151A33;--muted:#4F5775;--line:#C9D0E6;--accent:#B0214D;--accent-ink:#FFFFFF;--accent-soft:#F8DDE6;--now:#B7791F;--now-soft:#FBEBCB;--then:#3F57C0;--then-soft:#DDE3F8;--shadow:none;--mark:#FFE7A0;color-scheme:light}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact;box-shadow:none !important}
   html{scroll-behavior:auto}
   body{font-size:14px;line-height:1.5}
-  .agenda,.fab,.drawer,.toast,.btn,.chk,.progress,.pick-bar,.ideas,.idea-panel,.flip .hint,.tip{display:none !important}
+  .agenda,.fab,.drawer,.toast,.btn,.chk,.progress,.pick-bar,.flip .hint,.tip{display:none !important}
   .wrap{max-width:none;padding-inline:0}
   .hero-inner{padding-block:28px 34px}
   .hero h1{font-size:4rem}
@@ -233,7 +229,7 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
   section.step#warmup{break-before:auto;padding-top:22px}
   .sec-head h2{font-size:2rem}
   .intro{margin-bottom:16px}
-  .card,.q,.lane,.person,.flip,.quote,.tree,.round>h3,.ideas-print p{break-inside:avoid}
+  .card,.q,.lane,.person,.flip,.quote,.tree,.round>h3{break-inside:avoid}
   .reveal[hidden],.hint[hidden],.ans[hidden]{display:block !important}
   .reveal,.q .hint,.ans{margin-top:2px}
   .flip .front[hidden],.flip .back[hidden]{display:block !important}
@@ -243,8 +239,6 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
   .flip[aria-pressed="true"]{background:var(--surface);border-color:var(--line)}
   .tol .ans{margin-top:8px}
   .q.done{opacity:1}.q.done .qt{text-decoration:none}
-  .ideas-print{display:block;margin-bottom:22px}
-  .ideas-print p{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--accent);border-radius:10px;padding:10px 14px;margin-bottom:8px}
   .print-notes{display:none;break-before:page}
   .print-notes.has{display:block}
   .print-notes h2{font-size:2rem;margin-bottom:12px}
@@ -461,15 +455,6 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
 <!-- 5 DISCUSS -->
 <section class="step" id="discuss">
   <div class="sec-head"><span class="badge">Step 5 · 15 min</span><h2>Let’s discuss</h2></div>
-  <p class="intro">Four <b>big ideas</b> run through the chapter. Tap one to see the evidence, then use it in the questions below.</p>
-  <div class="ideas" role="group" aria-label="Big ideas">
-    <button class="idea" type="button" aria-pressed="false" data-i="0">Recognition</button>
-    <button class="idea" type="button" aria-pressed="false" data-i="1">Guilt and child logic</button>
-    <button class="idea" type="button" aria-pressed="false" data-i="2">Whose version of the story?</button>
-    <button class="idea" type="button" aria-pressed="false" data-i="3">Family you choose</button>
-  </div>
-  <div class="idea-panel" id="ideaPanel" aria-live="polite"><p>Tap an idea above.</p></div>
-  <div class="ideas-print" id="ideasPrint"></div>
 
   <p class="tip">You do not need every question. Choose <b>the ones your group likes</b>. Tick a question when you have talked about it.</p>
   <div class="progress"><span id="progTxt">0 of 11 discussed</span><div class="bar"><i id="progBar"></i></div></div>
@@ -616,19 +601,6 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
     var on=f.getAttribute("aria-pressed")!=="true";f.setAttribute("aria-pressed",on);
     $(".front",f).hidden=on;$(".back",f).hidden=!on;})});
 
-  /* big ideas */
-  var ideas=[
-    "<b>Recognition.</b> Jonathan sees Eddie first. Eddie says, “I knew you were someone I knew.” Daphne knows <mark class='k'>his voice</mark>. The opening line says you might see the same people “in a different wing.”",
-    "<b>Guilt and child logic.</b> Daphne was a young child in 1980 and still thinks she <mark class='k'>ruined Eddie’s life</mark>. She says children always think a divorce is their fault. Leda’s answer: “Logic doesn’t have anything to do with it.”",
-    "<b>Whose version of the story?</b> Daphne told Jonathan <mark class='k'>her mother was driving</mark>. Leda says their mother dislikes <mark class='k'>“conflicting narratives.”</mark> Daphne has not told her mother about Eddie.",
-    "<b>Family you choose.</b> Eddie was a stepfather for only <mark class='k'>fourteen months</mark>, but it was a large part of the girls’ young lives. He took <mark class='k'>the “whole package.”</mark> Jonathan’s care for Daphne is another kind of chosen love."
-  ];
-  var ib=$$(".idea"), ip=$("#ideaPanel");
-  ib.forEach(function(b){b.addEventListener("click",function(){
-    var on=b.getAttribute("aria-pressed")==="true";
-    ib.forEach(function(x){x.setAttribute("aria-pressed","false")});
-    if(on){ip.innerHTML="<p>Tap an idea above.</p>";return}
-    b.setAttribute("aria-pressed","true");ip.innerHTML="<p>"+ideas[+b.getAttribute("data-i")]+"</p>"})});
 
   /* progress */
   var dn=$$(".dn"), pt=$("#progTxt"), pb=$("#progBar");
@@ -679,7 +651,6 @@ footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:c
     addToNotes('<h3>Predictions for Part 2</h3><ul><li>What did the mother do that was heroic?</li><li>Will Daphne tell her mother about Eddie?</li><li>What will Eddie do next?</li></ul>');});
 
   var pn=$("#printNotes"), pnb=$("#pnBody"), origTitle=document.title;
-  var ipr=$("#ideasPrint");ipr.innerHTML=ideas.map(function(t){return "<p>"+t+"</p>"}).join("");
   window.addEventListener("beforeprint",function(){
     pnb.innerHTML=ed.innerHTML;pn.classList.toggle("has",ed.innerText.trim().length>0);
     origTitle=document.title;document.title="Whistler - Chapter 1 slides and notes";
