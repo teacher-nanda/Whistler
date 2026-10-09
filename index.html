@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Whistler Book Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Young+Serif&display=swap">
+<style>
+/* Layout concept: one lesson, two time layers. Warm museum gold = NOW, cold night blue = THEN (1980).
+   A sticky 50-minute agenda strip drives the flow; a notes drawer stays one tap away. */
+:root{
+  --bg:#F1F3FA; --surface:#FFFFFF; --surface2:#E6EAF5; --ink:#151A33; --muted:#4F5775; --line:#D3D9EC;
+  --accent:#B0214D; --accent-ink:#FFFFFF; --accent-soft:#F8DDE6;
+  --now:#B7791F; --now-soft:#FBEBCB; --then:#3F57C0; --then-soft:#DDE3F8;
+  --night:#0E1230; --night2:#1B2352; --star:#F6E8AE; --on-night:#EEF0FB; --on-night-muted:#B5BCDD;
+  --serif:"Young Serif", Georgia, "Times New Roman", serif;
+  --sans:"Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  --shadow:0 6px 24px rgba(21,26,51,.10);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B0F20; --surface:#141A38; --surface2:#1C2447; --ink:#E9ECF8; --muted:#A7AFCC; --line:#2B3463;
+    --accent:#F2708F; --accent-ink:#1B0710; --accent-soft:#3A1A2A;
+    --now:#E9B25A; --now-soft:#3A2D14; --then:#8FA2F2; --then-soft:#1F2850;
+    --shadow:0 6px 24px rgba(0,0,0,.4); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B0F20; --surface:#141A38; --surface2:#1C2447; --ink:#E9ECF8; --muted:#A7AFCC; --line:#2B3463;
+  --accent:#F2708F; --accent-ink:#1B0710; --accent-soft:#3A1A2A;
+  --now:#E9B25A; --now-soft:#3A2D14; --then:#8FA2F2; --then-soft:#1F2850;
+  --shadow:0 6px 24px rgba(0,0,0,.4); color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:19px;line-height:1.6;margin:0}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.15;text-wrap:balance;margin:0}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1080px;margin-inline:auto;padding-inline:20px}
+.label{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+
+/* HERO */
+.hero{position:relative;background:linear-gradient(180deg,var(--night) 0%,var(--night2) 100%);color:var(--on-night);overflow:hidden}
+.hero-art{position:absolute;inset:0;width:100%;height:100%}
+.hero-inner{position:relative;padding-block:56px 72px;max-width:1080px}
+.hero .eyebrow{color:var(--star);margin-bottom:14px}
+.hero h1{font-size:clamp(3.6rem,11vw,7rem);letter-spacing:-.01em}
+.hero .by{font-size:1.25rem;color:var(--on-night-muted);margin-top:6px}
+.hero .lede{max-width:34ch;margin-top:22px;font-size:1.25rem}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.chips span{border:1.5px solid rgba(246,232,174,.55);color:var(--star);border-radius:999px;padding:5px 15px;font-size:.92rem;font-weight:700;background:rgba(14,18,48,.55)}
+@keyframes tw{0%,100%{opacity:.25}50%{opacity:1}}
+.twinkle{animation:tw 3.4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.twinkle{animation:none}html{scroll-behavior:auto}}
+
+/* AGENDA STRIP */
+.agenda{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.agenda-scroll{overflow-x:auto;scrollbar-width:thin}
+.agenda ol{list-style:none;margin:0;padding:0;display:flex;min-width:max-content}
+.agenda li{flex:1 0 auto}
+.agenda a{display:flex;align-items:baseline;gap:9px;padding:12px 20px;text-decoration:none;color:var(--muted);border-bottom:4px solid transparent;font-weight:700;white-space:nowrap}
+.agenda a .n{font-family:var(--serif);font-size:1.15rem;color:var(--accent)}
+.agenda a .m{font-size:.8rem;font-weight:400;opacity:.85}
+.agenda a:hover{color:var(--ink)}
+.agenda a.on{color:var(--ink);border-bottom-color:var(--accent);background:var(--surface2)}
+
+/* SECTIONS */
+section.step{padding-block:68px 8px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-bottom:10px}
+.badge{background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:3px 14px;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.sec-head h2{font-size:clamp(2rem,4.6vw,3rem);flex-basis:100%}
+.intro{max-width:60ch;color:var(--muted);margin-bottom:28px;font-size:1.08rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--shadow)}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:10px;padding:10px 18px;font-weight:700}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn.small{padding:6px 12px;font-size:.88rem}
+
+/* WARM-UP */
+.pick{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.pick .card{display:flex;flex-direction:column;gap:12px;transition:transform .2s,border-color .2s}
+.pick .card .label{color:var(--accent)}
+.pick .card.hi{border-color:var(--accent);transform:translateY(-4px);outline:3px solid var(--accent-soft)}
+.pick-bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:18px}
+
+/* STORY */
+.sixty{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:34px}
+.sixty .card{padding:18px 20px}
+.sixty b{display:block;font-family:var(--serif);font-weight:400;font-size:1.25rem;margin-bottom:4px}
+.lanes{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.lane{border-radius:16px;padding:26px 24px 20px;border:1px solid var(--line)}
+.lane.now{background:var(--now-soft)}
+.lane.then{background:var(--then-soft)}
+.lane h3{font-size:1.7rem}
+.lane .where{font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.lane.now .where,.lane.now h3{color:var(--now)}
+.lane.then .where,.lane.then h3{color:var(--then)}
+.beats{list-style:none;margin:20px 0 0;padding:0 0 0 26px;position:relative}
+.beats::before{content:"";position:absolute;left:7px;top:8px;bottom:12px;width:3px;border-radius:2px;background:currentColor;opacity:.3}
+.lane.now .beats{color:var(--now)} .lane.then .beats{color:var(--then)}
+.beats li{position:relative;color:var(--ink);padding-bottom:16px}
+.beats li::before{content:"";position:absolute;left:-26px;top:7px;width:15px;height:15px;border-radius:50%;background:var(--surface);border:4px solid currentColor}
+.lane.now .beats li::before{border-color:var(--now)} .lane.then .beats li::before{border-color:var(--then)}
+.beats b{display:block}
+.bridge{text-align:center;margin:22px 0 0;color:var(--muted);font-size:1rem}
+.bridge strong{color:var(--accent)}
+
+/* PEOPLE */
+.tree{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:30px}
+.tree .t{background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:10px 16px;font-weight:700;line-height:1.25}
+.tree .t small{display:block;font-weight:400;color:var(--muted);font-size:.82rem}
+.tree .t.hot{border-color:var(--accent);background:var(--accent-soft)}
+.tree .arrow{color:var(--accent);font-size:1.5rem;font-weight:700}
+.tree-title{flex-basis:100%;color:var(--muted)}
+.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
+.person{display:flex;flex-direction:column;gap:12px;min-width:0}
+.person .top{display:flex;gap:14px;align-items:center}
+.av{flex:none;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-size:1.35rem;color:#fff}
+.person h3{font-size:1.4rem}
+.person .role{font-size:.9rem;color:var(--muted)}
+.person ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 10px;border-radius:999px}
+.tag.now{background:var(--now-soft);color:var(--now)} .tag.then{background:var(--then-soft);color:var(--then)} .tag.both{background:var(--accent-soft);color:var(--accent)}
+
+/* QUOTES */
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px;margin-bottom:46px}
+.quote{display:flex;flex-direction:column;gap:14px;min-width:0}
+.quote blockquote{margin:0;font-family:var(--serif);font-size:1.3rem;line-height:1.35;position:relative;padding-top:30px}
+.quote blockquote::before{content:"\201C";position:absolute;top:-14px;left:-4px;font-size:4.2rem;color:var(--accent);line-height:1}
+.quote .ctx{color:var(--muted);font-size:.9rem}
+.qactions{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.reveal{background:var(--surface2);border-radius:10px;padding:14px 16px;font-size:1rem}
+.words-head{margin-bottom:14px}
+.words-head h3{font-size:1.9rem}
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.flip{display:block;width:100%;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:16px 18px;min-height:150px;box-shadow:var(--shadow);transition:border-color .2s}
+.flip:hover{border-color:var(--accent)}
+.flip .w{font-family:var(--serif);font-size:1.4rem}
+.flip .hint{display:block;font-size:.78rem;color:var(--muted);margin-top:8px}
+.flip .def{font-size:1rem}
+.flip .ex{display:block;margin-top:8px;font-style:italic;color:var(--muted);font-size:.92rem}
+.flip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+
+/* DISCUSS */
+.ideas{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+.idea{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 18px;font-weight:700}
+.idea[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.idea-panel{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--accent);border-radius:12px;padding:16px 20px;margin-bottom:26px;min-height:76px}
+.progress{display:flex;align-items:center;gap:14px;margin-bottom:22px;color:var(--muted);font-weight:700}
+.bar{flex:1;height:10px;background:var(--surface2);border-radius:99px;overflow:hidden;max-width:360px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+.round{margin-bottom:30px}
+.round h3{font-size:1.6rem;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:12px}
+.round h3 small{font-family:var(--sans);font-size:.9rem;color:var(--muted)}
+.q{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:12px;transition:opacity .2s}
+.q.done{opacity:.6}
+.q.done .qt{text-decoration:line-through;text-decoration-color:var(--accent);text-decoration-thickness:2px}
+.qn{font-family:var(--serif);font-size:2rem;line-height:1;color:var(--accent);min-width:2ch}
+.qt{font-size:1.15rem;font-weight:700;min-width:0}
+.q .body{grid-column:2;display:flex;flex-direction:column;gap:10px;min-width:0}
+.q .hint{background:var(--surface2);border-radius:10px;padding:12px 14px;font-size:1rem}
+.q .qrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chk{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.92rem;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--accent)}
+.tip{font-size:1rem;color:var(--muted);margin-bottom:18px}
+.bonus{margin-top:36px}
+.bonus h3{font-size:1.7rem;margin-bottom:6px}
+.tol{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:16px}
+.tol ol{margin:0 0 14px;padding-left:22px;display:grid;gap:8px}
+.tol .ans{background:var(--surface2);border-radius:10px;padding:12px 14px;font-size:1rem}
+
+/* WRAP */
+.wrapgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.wrapgrid h3{font-size:1.45rem;margin-bottom:10px}
+.wrapgrid ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.locked{border-style:dashed;background:transparent;box-shadow:none;display:flex;flex-direction:column;justify-content:center;gap:6px;color:var(--muted)}
+.locked h3{color:var(--ink)}
+footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:center}
+
+/* NOTES DRAWER */
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:10px;background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:14px 22px;font-weight:700;box-shadow:0 8px 28px rgba(0,0,0,.3)}
+.drawer{position:fixed;z-index:50;top:0;right:0;bottom:0;width:min(500px,100%);background:var(--surface);border-left:1px solid var(--line);box-shadow:-10px 0 40px rgba(0,0,0,.25);display:flex;flex-direction:column;transform:translateX(104%);visibility:hidden;transition:transform .25s ease,visibility 0s linear .25s;padding-top:env(safe-area-inset-top,0px)}
+.drawer.open{transform:none;visibility:visible;transition:transform .25s ease}
+.dhead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.dhead h3{font-size:1.4rem}
+.tb{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--surface2);align-items:center}
+.tb button{min-width:38px;height:38px;border:1.5px solid var(--line);background:var(--surface);border-radius:8px;font-weight:700;padding:0 8px}
+.tb button:hover{border-color:var(--accent)}
+.tb .sep{width:1px;height:26px;background:var(--line);margin:0 4px}
+.sw{width:38px;height:38px;display:grid;place-items:center}
+.sw i{display:block;width:20px;height:20px;border-radius:50%;border:2px solid rgba(0,0,0,.25)}
+.sw.none i{background:var(--surface);position:relative;border-color:var(--muted)}
+.sw.none i::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;background:var(--accent);transform:rotate(45deg)}
+.editor{flex:1;overflow:auto;padding:18px 20px;font-size:1.1rem;line-height:1.65;outline:none;min-height:0}
+.editor h3{font-size:1.3rem;margin:14px 0 4px;color:var(--accent)}
+.editor p{margin:0 0 8px}
+.editor ul,.editor ol{margin:0 0 8px;padding-left:24px}
+.editor [style*="background"]{color:#151A33 !important}
+.editor [style*="transparent"],.editor [style*="rgba(0, 0, 0, 0)"]{color:var(--ink) !important}
+.dfoot{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
+.dfoot .st{margin-right:auto;color:var(--muted);font-size:.88rem}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:10px;font-weight:700;opacity:0;pointer-events:none;transition:.25s;z-index:70;max-width:calc(100% - 32px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.hl{border-radius:3px;padding:0 3px;color:#151A33}
+
+@media (max-width:820px){
+  .lanes{grid-template-columns:1fr}
+  .drawer{top:auto;height:86%;width:100%;border-left:0;border-top:1px solid var(--line);transform:translateY(104%);border-radius:18px 18px 0 0}
+  .drawer.open{transform:none}
+  body{font-size:18px}
+  .hero-inner{padding-block:40px 56px}
+  .q{grid-template-columns:1fr}.q .body{grid-column:1}
+}
+</style>
+
+</head>
+<body>
+<header class="hero" id="top">
+  <svg class="hero-art" viewBox="0 0 1200 480" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="glow" cx="50%" cy="100%" r="80%"><stop offset="0" stop-color="#E9B25A" stop-opacity=".55"/><stop offset="1" stop-color="#E9B25A" stop-opacity="0"/></radialGradient>
+      <linearGradient id="milky" x1="0" x2="1"><stop offset="0" stop-color="#F6E8AE" stop-opacity="0"/><stop offset=".5" stop-color="#F6E8AE" stop-opacity=".16"/><stop offset="1" stop-color="#F6E8AE" stop-opacity="0"/></linearGradient>
+    </defs>
+    <!-- THEN: night sky, road, hills -->
+    <ellipse cx="900" cy="150" rx="420" ry="46" fill="url(#milky)" transform="rotate(-24 900 150)"/>
+    <g id="stars"></g>
+    <path d="M520 480 C640 360 760 400 860 320 C960 240 1100 300 1200 220 L1200 480 Z" fill="#090C24"/>
+    <path d="M700 480 C800 420 780 360 880 330 S1040 280 1000 215" fill="none" stroke="#1D2552" stroke-width="40" stroke-linecap="round"/>
+    <path d="M700 480 C800 420 780 360 880 330 S1040 280 1000 215" fill="none" stroke="#4A5CAA" stroke-width="2" stroke-dasharray="10 12" stroke-linecap="round"/>
+    <g transform="translate(862 318) rotate(-18)" fill="#05071A" stroke="#4A5CAA" stroke-width="1">
+      <rect x="-24" y="-10" width="48" height="14" rx="3"/><rect x="-14" y="-18" width="30" height="10" rx="3"/>
+      <circle cx="-14" cy="6" r="5"/><circle cx="14" cy="6" r="5"/>
+    </g>
+    <text x="1160" y="44" text-anchor="end" fill="#F6E8AE" font-size="14" font-weight="700" letter-spacing="2.4" font-family="Atkinson Hyperlegible, sans-serif">FRIDAY · JANUARY 18 · 1980</text>
+    <!-- NOW: museum arches -->
+    <rect x="0" y="0" width="560" height="480" fill="url(#glow)"/>
+    <g fill="#E9B25A" opacity=".2">
+      <path d="M30 480V270a70 70 0 0 1 140 0V480Z"/><path d="M210 480V230a70 70 0 0 1 140 0V480Z"/><path d="M390 480V270a70 70 0 0 1 140 0V480Z"/>
+    </g>
+    <g fill="#E9B25A" opacity=".16"><path d="M52 480V275a48 48 0 0 1 96 0V480Z"/><path d="M232 480V235a48 48 0 0 1 96 0V480Z"/><path d="M412 480V275a48 48 0 0 1 96 0V480Z"/></g>
+    <text x="40" y="44" fill="#F6E8AE" font-size="14" font-weight="700" letter-spacing="2.4" font-family="Atkinson Hyperlegible, sans-serif">NOW · THE METROPOLITAN MUSEUM</text>
+  </svg>
+  <div class="wrap hero-inner">
+    <p class="label eyebrow">Book Club · Meeting 1</p>
+    <h1>Whistler</h1>
+    <p class="by">a novel by Ann Patchett</p>
+    <div class="chips"><span>Chapter 1 only</span><span>50 minutes</span><span>Bring your highlights</span></div>
+  </div>
+</header>
+
+<nav class="agenda" aria-label="Lesson plan">
+  <div class="agenda-scroll wrap">
+    <ol>
+      <li><a href="#warmup" data-s="warmup"><span class="n">1</span>Warm-up <span class="m">5 min</span></a></li>
+      <li><a href="#story" data-s="story"><span class="n">2</span>The story <span class="m">8 min</span></a></li>
+      <li><a href="#people" data-s="people"><span class="n">3</span>The people <span class="m">7 min</span></a></li>
+      <li><a href="#close" data-s="close"><span class="n">4</span>Words &amp; quotes <span class="m">10 min</span></a></li>
+      <li><a href="#discuss" data-s="discuss"><span class="n">5</span>Discuss <span class="m">15 min</span></a></li>
+      <li><a href="#wrapup" data-s="wrapup"><span class="n">6</span>Wrap-up <span class="m">5 min</span></a></li>
+    </ol>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- 1 WARM-UP -->
+<section class="step" id="warmup">
+  <div class="sec-head"><span class="badge">Step 1 · 5 min</span><h2>Warm-up: faces from the past</h2></div>
+  <p class="intro">Chapter 1 starts with a surprise meeting in a museum. Pick one question and answer it in two or three sentences. Everyone gets a turn.</p>
+  <div class="pick" id="pick">
+    <div class="card"><span class="label">Question A</span><p>Have you ever seen someone from your past by surprise, like a teacher, a neighbor or an old friend? Where were you, and what did you do?</p></div>
+    <div class="card"><span class="label">Question B</span><p>Think of a family memory that two people tell differently. Who remembers it correctly, and how do you know?</p></div>
+    <div class="card"><span class="label">Question C</span><p>Could you recognize a person you loved as a child after forty years? What would stay the same about them?</p></div>
+  </div>
+  <div class="pick-bar"><button class="btn" id="pickBtn" type="button">Pick a question for us</button><span class="tip" style="margin:0">Or choose your own.</span></div>
+</section>
+
+<!-- 2 STORY -->
+<section class="step" id="story">
+  <div class="sec-head"><span class="badge">Step 2 · 8 min</span><h2>The story in two time layers</h2></div>
+  <p class="intro">The chapter jumps between the present day and one Friday in 1980. Keep both layers in mind.</p>
+  <div class="sixty">
+    <div class="card"><b>The surprise</b>In New York, Daphne and her husband Jonathan meet an old man who has been watching them. He is Eddie Triplett, her stepfather from long ago.</div>
+    <div class="card"><b>The wound</b>Daphne cried when she realized who he was. She tells her sister Leda she believes she ruined Eddie’s life.</div>
+    <div class="card"><b>The flashback</b>We go back to January 1980. Leda is sick, Eddie helps, and a night drive with Daphne ends with the car leaving the road.</div>
+  </div>
+  <div class="lanes">
+    <div class="lane now">
+      <p class="where">Now · New York City</p>
+      <h3>Daphne is 53</h3>
+      <ol class="beats">
+        <li><b>At the Met</b>Jonathan whispers that an old man keeps looking at Daphne. He leaves the next day on what might be a long trip.</li>
+        <li><b>“This is your stepfather”</b>Jonathan talks to the man. Daphne knows his voice before she knows his face: Eddie Triplett.</li>
+        <li><b>Lunch</b>They catch up on jobs, children and books. Eddie offers his number from a tiny notebook but will not take hers.</li>
+        <li><b>The walk across the park</b>Jonathan goes with Daphne to Leda’s building. She realizes he does not want her to get lost.</li>
+        <li><b>Daphne and Leda</b>Why did she cry? “Because I had loved him and I had ruined his life.” They talk about the car accident.</li>
+      </ol>
+    </div>
+    <div class="lane then">
+      <p class="where">Then · Winchester, Massachusetts</p>
+      <h3>Friday, January 18, 1980</h3>
+      <ol class="beats">
+        <li><b>Leda is sick at school</b>The nurse calls Abigail, their mother, who works at a publisher with Eddie. Eddie covers for her at the office.</li>
+        <li><b>“Make sure it’s not appendicitis”</b>Eddie tells Abigail how to check. Leda screams when Abigail touches her stomach, and she goes into surgery.</li>
+        <li><b>Eddie and Daphne</b>Eddie picks up Daphne, packs bags, and they visit the hospital. Leda sleeps through it.</li>
+        <li><b>A drive with no purpose</b>Leaving the hospital, Eddie takes Daphne on a drive that nobody can explain later. They switch off the headlights to see the stars.</li>
+        <li><b>The edge of the road</b>The car goes off the road into the dark. Eddie’s one question: is Daphne wearing her seat belt?</li>
+      </ol>
+    </div>
+  </div>
+  <p class="bridge">The two layers meet in one sentence Daphne says in Leda’s apartment: <strong>“Because I had loved him and I had ruined his life.”</strong></p>
+</section>
+
+<!-- 3 PEOPLE -->
+<section class="step" id="people">
+  <div class="sec-head"><span class="badge">Step 3 · 7 min</span><h2>Who is who</h2></div>
+  <p class="intro">Seven names in one chapter is a lot. Use the map first, then the cards.</p>
+  <div class="tree" aria-label="Daphne and Leda’s mother had three husbands">
+    <p class="tree-title label">Abigail’s three husbands, in order</p>
+    <div class="t">Neil “Buddy” Zabriskie<small>father of Daphne and Leda</small></div>
+    <span class="arrow" aria-hidden="true">→</span>
+    <div class="t hot">Eddie Triplett<small>stepfather, 14 months</small></div>
+    <span class="arrow" aria-hidden="true">→</span>
+    <div class="t">Lucas Ekker<small>two sons: Christopher and Matthew</small></div>
+  </div>
+  <div class="people">
+    <article class="card person">
+      <div class="top"><div class="av" style="background:#B0214D">D</div><div><h3>Daphne</h3><p class="role">Narrator · Daphne Fuller, born Zabriskie</p></div></div>
+      <span class="tag both">Now and then</span>
+      <ul><li>53 now. Teaches English at a girls’ prep school.</li><li>Took Jonathan’s name when they married.</li><li>Reads constantly. Rarely cries.</li></ul>
+    </article>
+    <article class="card person">
+      <div class="top"><div class="av" style="background:#B7791F">J</div><div><h3>Jonathan</h3><p class="role">Daphne’s husband</p></div></div>
+      <span class="tag now">Now</span>
+      <ul><li>70, a retired hospital administrator.</li><li>His first wife died of melanoma, the same illness Daphne’s father had.</li><li>Curious and kind. He starts the conversation with Eddie.</li></ul>
+    </article>
+    <article class="card person">
+      <div class="top"><div class="av" style="background:#3F57C0">E</div><div><h3>Eddie Triplett</h3><p class="role">Daphne’s stepfather, long ago</p></div></div>
+      <span class="tag both">Now and then</span>
+      <ul><li>76. A book editor who is “not retired in the least.”</li><li>Married to Abigail for fourteen months.</li><li>Carries a tiny leather notebook and a tiny pen.</li></ul>
+    </article>
+    <article class="card person">
+      <div class="top"><div class="av" style="background:#0F8B8D">L</div><div><h3>Leda</h3><p class="role">Daphne’s sister</p></div></div>
+      <span class="tag both">Now and then</span>
+      <ul><li>A clinical psychologist who writes a column called “Your Therapist.”</li><li>Married to Steve, who works at a hedge fund.</li><li>She says she was almost eight and in second grade when she had appendicitis.</li></ul>
+    </article>
+    <article class="card person">
+      <div class="top"><div class="av" style="background:#7A4FA3">A</div><div><h3>Abigail</h3><p class="role">Their mother</p></div></div>
+      <span class="tag both">Now and then</span>
+      <ul><li>76 now, married to Lucas Ekker near Boston.</li><li>In 1980 she loved her publishing job and needed to keep it.</li><li>Daphne has not told her about Eddie.</li></ul>
+    </article>
+    <article class="card person">
+      <div class="top"><div class="av" style="background:#555F7D">B</div><div><h3>Buddy Zabriskie</h3><p class="role">Daphne and Leda’s father</p></div></div>
+      <span class="tag then">Mostly then</span>
+      <ul><li>Behind on child support. He barely takes the girls for weekends.</li><li>He was dying of melanoma in the hospital where Jonathan worked. That is how Daphne met Jonathan.</li></ul>
+    </article>
+  </div>
+</section>
+
+<!-- 4 WORDS AND QUOTES -->
+<section class="step" id="close">
+  <div class="sec-head"><span class="badge">Step 4 · 10 min</span><h2>Close reading: quotes and words</h2></div>
+  <p class="intro">Take a few minutes on six lines from the chapter. Tap “Think about it” for a question. Use “Add to notes” to save a line to your notes.</p>
+  <div class="quotes">
+    <article class="card quote">
+      <blockquote>If you took the time to notice the people around you, chances were you’d see some of them again in a different wing.</blockquote>
+      <p class="ctx">Opening of the chapter, at the museum</p>
+      <div class="reveal" hidden>The museum has “wings,” and the chapter has two time layers. Does this sentence hint at what will happen? What does it say about noticing people?</div>
+      <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
+    </article>
+    <article class="card quote">
+      <blockquote>…our hearts were forever stitched together, mine and Eddie’s.</blockquote>
+      <p class="ctx">Daphne in the elevator, right after she recognizes Eddie</p>
+      <div class="reveal" hidden>“Stitched” is a sewing word. It suggests a bond that can be pulled but not easily undone. Why is the word more interesting than “connected”?</div>
+      <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
+    </article>
+    <article class="card quote">
+      <blockquote>Because I had loved him and I had ruined his life.</blockquote>
+      <p class="ctx">Daphne explains why she cried</p>
+      <div class="reveal" hidden>The sentence has two parts joined by “and.” Why does she put love and ruin side by side? Does it sound like a fact or a feeling?</div>
+      <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
+    </article>
+    <article class="card quote">
+      <blockquote>Mom isn’t a fan of conflicting narratives. She’s married to Lucas, period.</blockquote>
+      <p class="ctx">Leda, after the museum</p>
+      <div class="reveal" hidden>A “narrative” is a version of a story. What is Leda saying about the way their mother handles the past? Is Daphne also choosing her own version of the story?</div>
+      <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
+    </article>
+    <article class="card quote">
+      <blockquote>Daphne had been saved, but she was always going to be a tree, a virtuous tree…</blockquote>
+      <p class="ctx">Daphne thinks about her name and her sister’s</p>
+      <div class="reveal" hidden>In the myth, Daphne is turned into a tree to escape a god. Is being saved a gift here, or also a limit? How does Daphne seem to see herself?</div>
+      <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
+    </article>
+    <article class="card quote">
+      <blockquote>Eddie Triplett had not killed a child, nor would he ever again in his life love another person as much as he loved her.</blockquote>
+      <p class="ctx">The last lines of the chapter</p>
+      <div class="reveal" hidden>The sentence first tells us what did not happen. Why start with that? Is the second half of the sentence happy, sad, or both?</div>
+      <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
+    </article>
+  </div>
+
+  <div class="words-head"><h3>Words from the chapter</h3><p class="tip">Tap a card to see the meaning and the sentence from the story.</p></div>
+  <div class="words">
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">on a whim</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">because of a sudden idea, with no real reason</span><span class="ex">Eddie: “I came on a whim.”</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">winded</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">out of breath after walking or running</span><span class="ex">An old man, “visibly winded” from the distance he traveled.</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">hunt someone down</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">to search for a person until you find them</span><span class="ex">“A stranger hunting you down in the Met.”</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">send someone packing</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">to make someone leave, often in an angry way</span><span class="ex">“When she sent Eddie packing…”</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">stent</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">a tiny tube a doctor puts in an artery to keep it open</span><span class="ex">Eddie: “I had a stent there once.”</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">a package</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">the money and benefits a company gives you when you leave a job</span><span class="ex">“The senior staff got an excellent package.”</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">terminal stop</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">the last stop on a line. Here it means the last job.</span><span class="ex">Random House “proved to be the terminal stop.”</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">a run</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">a period of time that something lasts or goes well</span><span class="ex">“Eddie didn’t get much of a run.”</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">burly</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">big, strong and heavy in the body</span><span class="ex">What did Daphne know about her father? “That he was burly.”</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">ruptured</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">burst open, usually inside the body</span><span class="ex">Leda’s appendix ruptured during surgery.</span></span></button>
+  </div>
+</section>
+
+<!-- 5 DISCUSS -->
+<section class="step" id="discuss">
+  <div class="sec-head"><span class="badge">Step 5 · 15 min</span><h2>Let’s discuss</h2></div>
+  <p class="intro">Four big ideas run through the chapter. Tap one to see the evidence, then use it in the questions below.</p>
+  <div class="ideas" role="group" aria-label="Big ideas">
+    <button class="idea" type="button" aria-pressed="false" data-i="0">Recognition</button>
+    <button class="idea" type="button" aria-pressed="false" data-i="1">Guilt and child logic</button>
+    <button class="idea" type="button" aria-pressed="false" data-i="2">Whose version of the story?</button>
+    <button class="idea" type="button" aria-pressed="false" data-i="3">Family you choose</button>
+  </div>
+  <div class="idea-panel" id="ideaPanel" aria-live="polite"><p>Tap an idea above.</p></div>
+
+  <p class="tip">You do not need every question. Choose the ones your group likes. Tick a question when you have talked about it.</p>
+  <div class="progress"><span id="progTxt">0 of 11 discussed</span><div class="bar"><i id="progBar"></i></div></div>
+
+  <div class="round">
+    <h3>Round 1 · Understanding <small>about 3 min</small></h3>
+    <div class="q"><span class="qn">1</span><div class="qt">Who is Eddie Triplett, and how is he connected to Daphne and Leda?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Think about his job, his marriage to Abigail, how long it lasted, and why Daphne did not know him at first.</div></div></div>
+    <div class="q"><span class="qn">2</span><div class="qt">The chapter has two time layers. When and where is each one?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Look for the date and place that start the second layer: Friday, January 18, 1980, Winchester, Massachusetts.</div></div></div>
+    <div class="q"><span class="qn">3</span><div class="qt">What happened to Leda in 1980, and how did Eddie help?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Eddie’s advice was to push a little on the right side of her stomach. If she screamed, go to the ER.</div></div></div>
+  </div>
+
+  <div class="round">
+    <h3>Round 2 · Digging deeper <small>about 8 min</small></h3>
+    <div class="q"><span class="qn">4</span><div class="qt">Daphne “never cries,” yet she cries when she recognizes Eddie. Then the elevator doors close and the crying stops. What do you think she is feeling?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>She says their hearts were “forever stitched together.” What might change when the doors shut and she is in public again?</div></div></div>
+    <div class="q"><span class="qn">5</span><div class="qt">Eddie felt he knew Daphne before he knew why. Daphne knew his voice before his face. How do we recognize people we have not seen for decades?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Compare the voice, the face, and the feeling. Which one lasts longest for you?</div></div></div>
+    <div class="q"><span class="qn">6</span><div class="qt">Daphne believes she ruined Eddie’s life, but she was only a child. Leda says, “Logic doesn’t have anything to do with it.” Can guilt be real even when it is not logical?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>The narrator says, “In the way of all children, I believed the fault for their divorce was mine.” Why do children blame themselves?</div></div></div>
+    <div class="q"><span class="qn">7</span><div class="qt">Daphne told Jonathan that her mother was driving during the accident. Later she says she never found the right moment to correct herself. Is this a lie, a simplification, or a way to protect herself?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>She says she did not tell Jonathan about Eddie when they first met, and later Jonathan became “True-Love Jonathan.” What makes it harder to correct a story over time?</div></div></div>
+    <div class="q"><span class="qn">8</span><div class="qt">Jonathan walks Daphne across the park, and she realizes he does it to keep her from getting lost. On the walk he also says, “Of the three, the best one got away.” What kind of man is Jonathan?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>He compares her father, her stepfather and Eddie. Can you judge a person from one lunch? Why might Jonathan say this?</div></div></div>
+  </div>
+
+  <div class="round">
+    <h3>Round 3 · The big picture <small>about 4 min</small></h3>
+    <div class="q"><span class="qn">9</span><div class="qt">The chapter ends in the middle of the crash. Why might the author stop there, and what do you want to know next?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>The last lines tell us what did not happen. How does that change the feeling of the ending?</div></div></div>
+    <div class="q"><span class="qn">10</span><div class="qt">About the drive, the narrator says that “there was no logic. Stop looking for it.” Have you ever done something without a reason that became an important memory?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Daphne thinks a trip like this was “the kind of thing Daphne only could have done with Eddie.” What does that say about him, and about her mother?</div></div></div>
+    <div class="q"><span class="qn">11</span><div class="qt">Leda was named for a girl in a myth, and Daphne for another. Daphne says she is “a virtuous tree.” Do you think names shape who we become?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Both myths are about girls in danger from gods. One is saved by being turned into a tree. How does Daphne describe herself, and how does she describe Leda?</div></div></div>
+  </div>
+
+  <div class="card bonus">
+    <h3>Bonus game: truth or lie?</h3>
+    <p class="tip" style="margin:0">Use it only if there is time. Read the three statements. One is false. Tap to check.</p>
+    <div class="tol">
+      <div>
+        <ol>
+          <li>Eddie and Daphne’s mother worked at the same publisher in Boston.</li>
+          <li>Daphne met Jonathan because her father was a patient at the hospital where he worked.</li>
+          <li>Daphne recognized Eddie the moment she saw him at the museum.</li>
+        </ol>
+        <button class="btn ghost small tolbtn" type="button" aria-expanded="false">Show the answer</button>
+        <div class="ans" hidden><b>Statement 3 is false.</b> Jonathan noticed Eddie first, and Daphne shook her head when he asked if she knew him. She recognized the voice later.</div>
+      </div>
+      <div>
+        <ol>
+          <li>Leda’s appendix ruptured during surgery.</li>
+          <li>Eddie and Daphne had a clear plan for their night drive.</li>
+          <li>Eddie and Abigail had been married for fourteen months.</li>
+        </ol>
+        <button class="btn ghost small tolbtn" type="button" aria-expanded="false">Show the answer</button>
+        <div class="ans" hidden><b>Statement 2 is false.</b> No one could find a purpose for the trip. In the narrator’s words, “there was no logic.”</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 WRAP-UP -->
+<section class="step" id="wrapup">
+  <div class="sec-head"><span class="badge">Step 6 · 5 min</span><h2>Wrap-up</h2></div>
+  <p class="intro">Finish with one word each, then write a prediction in your notes.</p>
+  <div class="wrapgrid">
+    <div class="card"><h3>One word round</h3><ul><li>Describe Chapter 1 in one word.</li><li>Who would you most like to talk to: Daphne, Eddie, Leda or Jonathan?</li></ul></div>
+    <div class="card"><h3>Make a prediction</h3><ul><li>Daphne says her mother “managed something so heroic that there should have been songs written about her.” What do you think it was?</li><li>Will Daphne tell her mother about Eddie?</li><li>What do you expect Eddie to do next?</li></ul><div class="pick-bar"><button class="btn small" id="predNote" type="button">Add these to my notes</button></div></div>
+    <div class="card locked"><span class="label">Next time</span><h3>Part 2 · coming soon</h3><p>We will start by checking our predictions.</p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap">Based on the club’s reading highlights from Chapter 1 of Whistler by Ann Patchett.</footer>
+
+<!-- NOTES -->
+<button class="fab" id="fab" type="button" aria-controls="drawer" aria-expanded="false">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+  My notes
+</button>
+<aside class="drawer" id="drawer" aria-label="My notes" role="dialog">
+  <div class="dhead"><h3>My notes</h3><button class="btn ghost small" id="closeN" type="button">Close</button></div>
+  <div class="tb" id="tb" role="toolbar" aria-label="Formatting">
+    <button type="button" data-c="bold" title="Bold" aria-label="Bold"><b>B</b></button>
+    <button type="button" data-c="italic" title="Italic" aria-label="Italic"><i>I</i></button>
+    <button type="button" data-c="underline" title="Underline" aria-label="Underline"><u>U</u></button>
+    <button type="button" data-c="strikeThrough" title="Strikethrough" aria-label="Strikethrough"><s>S</s></button>
+    <span class="sep"></span>
+    <button type="button" class="sw" data-h="#FFE55C" title="Highlight yellow" aria-label="Highlight yellow"><i style="background:#FFE55C"></i></button>
+    <button type="button" class="sw" data-h="#FFB3C7" title="Highlight pink" aria-label="Highlight pink"><i style="background:#FFB3C7"></i></button>
+    <button type="button" class="sw" data-h="#A8F0C0" title="Highlight green" aria-label="Highlight green"><i style="background:#A8F0C0"></i></button>
+    <button type="button" class="sw" data-h="#A9CBFF" title="Highlight blue" aria-label="Highlight blue"><i style="background:#A9CBFF"></i></button>
+    <button type="button" class="sw none" data-h="transparent" title="Remove highlight" aria-label="Remove highlight"><i></i></button>
+    <span class="sep"></span>
+    <button type="button" data-c="insertUnorderedList" title="Bullet list" aria-label="Bullet list">• List</button>
+    <button type="button" data-c="insertOrderedList" title="Numbered list" aria-label="Numbered list">1. List</button>
+    <button type="button" data-b="h3" title="Heading" aria-label="Heading">H</button>
+    <button type="button" data-b="p" title="Normal text" aria-label="Normal text">Aa</button>
+    <span class="sep"></span>
+    <button type="button" data-c="undo" title="Undo" aria-label="Undo">Undo</button>
+    <button type="button" data-c="redo" title="Redo" aria-label="Redo">Redo</button>
+    <button type="button" data-c="removeFormat" title="Clear formatting" aria-label="Clear formatting">Clear style</button>
+  </div>
+  <div class="editor" id="editor" contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Notes"></div>
+  <div class="dfoot"><span class="st" id="st">Saved on this device</span><button class="btn ghost small" id="copyN" type="button">Copy notes</button><button class="btn ghost small" id="clearN" type="button">Clear all</button></div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var KEY="whistler-ch1-notes-v1";
+  function store(k,v){try{if(v===undefined){return localStorage.getItem(k)}localStorage.setItem(k,v);}catch(e){return null}}
+
+  /* stars */
+  (function(){
+    var g=document.getElementById("stars"), seed=7, ns="http://www.w3.org/2000/svg";
+    function r(){seed=(seed*16807)%2147483647;return seed/2147483647}
+    for(var i=0;i<90;i++){
+      var c=document.createElementNS(ns,"circle");
+      c.setAttribute("cx",(480+r()*720).toFixed(1));c.setAttribute("cy",(r()*300).toFixed(1));
+      c.setAttribute("r",(0.6+r()*1.8).toFixed(2));c.setAttribute("fill","#F6E8AE");
+      c.setAttribute("opacity",(0.35+r()*0.6).toFixed(2));
+      if(i%3===0){c.setAttribute("class","twinkle");c.style.animationDelay=(r()*3).toFixed(1)+"s"}
+      g.appendChild(c);
+    }
+  })();
+
+  /* toast */
+  var toastEl=$("#toast"), tt;
+  function toast(m){toastEl.textContent=m;toastEl.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){toastEl.classList.remove("on")},2200)}
+
+  /* scroll spy */
+  var links=$$(".agenda a");
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){var on=a.getAttribute("data-s")===e.target.id;a.classList.toggle("on",on);if(on&&a.scrollIntoView&&window.innerWidth<900){var sc=a.closest(".agenda-scroll");sc.scrollTo({left:a.offsetLeft-20,behavior:"smooth"})}})}})},{rootMargin:"-30% 0px -60% 0px"});
+    $$("section.step").forEach(function(s){io.observe(s)});
+  }
+
+  /* warm-up picker */
+  var cards=$$("#pick .card"), last=-1;
+  $("#pickBtn").addEventListener("click",function(){
+    var n;do{n=Math.floor(Math.random()*cards.length)}while(n===last&&cards.length>1);
+    last=n;cards.forEach(function(c,i){c.classList.toggle("hi",i===n)});
+    cards[n].scrollIntoView({block:"nearest",behavior:"smooth"});
+  });
+
+  /* quote reveals / hints / answers */
+  function bindToggle(btnSel,openLabel,closeLabel,getTarget){
+    $$(btnSel).forEach(function(b){b.addEventListener("click",function(){
+      var t=getTarget(b), open=t.hidden;t.hidden=!open;b.setAttribute("aria-expanded",open);b.textContent=open?closeLabel:openLabel});});
+  }
+  bindToggle(".rv","Think about it","Hide",function(b){return $(".reveal",b.closest(".quote"))});
+  bindToggle(".hn","Hint","Hide hint",function(b){return $(".hint",b.closest(".q"))});
+  bindToggle(".tolbtn","Show the answer","Hide answer",function(b){return b.nextElementSibling});
+
+  /* flip cards */
+  $$(".flip").forEach(function(f){f.addEventListener("click",function(){
+    var on=f.getAttribute("aria-pressed")!=="true";f.setAttribute("aria-pressed",on);
+    $(".front",f).hidden=on;$(".back",f).hidden=!on;})});
+
+  /* big ideas */
+  var ideas=[
+    "<b>Recognition.</b> Jonathan sees Eddie first. Eddie says, “I knew you were someone I knew.” Daphne knows his voice. The opening line says you might see the same people “in a different wing.”",
+    "<b>Guilt and child logic.</b> Daphne was a young child in 1980 and still thinks she ruined Eddie’s life. She says children always think a divorce is their fault. Leda’s answer: “Logic doesn’t have anything to do with it.”",
+    "<b>Whose version of the story?</b> Daphne told Jonathan her mother was driving. Leda says their mother dislikes “conflicting narratives.” Daphne has not told her mother about Eddie.",
+    "<b>Family you choose.</b> Eddie was a stepfather for only fourteen months, but it was a large part of the girls’ young lives. He took the “whole package.” Jonathan’s care for Daphne is another kind of chosen love."
+  ];
+  var ib=$$(".idea"), ip=$("#ideaPanel");
+  ib.forEach(function(b){b.addEventListener("click",function(){
+    var on=b.getAttribute("aria-pressed")==="true";
+    ib.forEach(function(x){x.setAttribute("aria-pressed","false")});
+    if(on){ip.innerHTML="<p>Tap an idea above.</p>";return}
+    b.setAttribute("aria-pressed","true");ip.innerHTML="<p>"+ideas[+b.getAttribute("data-i")]+"</p>"})});
+
+  /* progress */
+  var dn=$$(".dn"), pt=$("#progTxt"), pb=$("#progBar");
+  function prog(){var c=dn.filter(function(x){return x.checked}).length;pt.textContent=c+" of "+dn.length+" discussed";pb.style.width=(c/dn.length*100)+"%"}
+  dn.forEach(function(x){x.addEventListener("change",function(){x.closest(".q").classList.toggle("done",x.checked);prog()})});
+  prog();
+
+  /* notes drawer */
+  var drawer=$("#drawer"), fab=$("#fab"), ed=$("#editor"), st=$("#st");
+  var starter="<h3>My first reactions</h3><p><br></p><h3>Questions I have</h3><p><br></p><h3>Words to remember</h3><p><br></p><h3>My predictions</h3><p><br></p>";
+  var saved=store(KEY);
+  ed.innerHTML=(saved&&saved.length)?saved:starter;
+  function setOpen(o){drawer.classList.toggle("open",o);fab.setAttribute("aria-expanded",o);if(o){setTimeout(function(){ed.focus()},260)}}
+  fab.addEventListener("click",function(){setOpen(!drawer.classList.contains("open"))});
+  $("#closeN").addEventListener("click",function(){setOpen(false);fab.focus()});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&drawer.classList.contains("open")){setOpen(false)}});
+  var sv;function save(){st.textContent="Saving…";clearTimeout(sv);sv=setTimeout(function(){var ok=store(KEY,ed.innerHTML);st.textContent=ok===null?"Notes stay on this page only":"Saved on this device"},400)}
+  ed.addEventListener("input",save);
+
+  function inEd(){var s=window.getSelection();return s&&s.rangeCount&&ed.contains(s.anchorNode)}
+  var tb=$("#tb");
+  tb.addEventListener("mousedown",function(e){if(e.target.closest("button"))e.preventDefault()});
+  tb.addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(!inEd()){ed.focus();toast("Select some of your text first");return}
+    try{document.execCommand("styleWithCSS",false,true)}catch(x){}
+    var c=b.getAttribute("data-c"),h=b.getAttribute("data-h"),bl=b.getAttribute("data-b");
+    if(c){document.execCommand(c,false,null)}
+    else if(h){var ok=document.execCommand("hiliteColor",false,h);if(!ok){document.execCommand("backColor",false,h)}}
+    else if(bl){document.execCommand("formatBlock",false,bl)}
+    save();
+  });
+
+  function addToNotes(html){
+    var d=document.createElement("div");d.innerHTML=html;
+    while(d.firstChild){ed.appendChild(d.firstChild)}
+    save();toast("Added to your notes");
+  }
+  function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+  $$(".quote .an").forEach(function(b){b.addEventListener("click",function(){
+    var q=b.closest(".quote");
+    addToNotes('<p><span class="hl" style="background-color:#FFE55C">'+esc($("blockquote",q).textContent)+'</span><br><i>'+esc($(".ctx",q).textContent)+'</i></p><p><br></p>');})});
+  $$(".q .an").forEach(function(b){b.addEventListener("click",function(){
+    var q=b.closest(".q");
+    addToNotes('<h3>Question '+esc($(".qn",q).textContent)+'</h3><p>'+esc($(".qt",q).textContent)+'</p><p><b>My answer:</b> </p>');})});
+  $("#predNote").addEventListener("click",function(){
+    addToNotes('<h3>Predictions for Part 2</h3><ul><li>What did the mother do that was heroic?</li><li>Will Daphne tell her mother about Eddie?</li><li>What will Eddie do next?</li></ul>');});
+
+  $("#copyN").addEventListener("click",function(){
+    var txt=ed.innerText;
+    function fallback(){var r=document.createRange();r.selectNodeContents(ed);var s=window.getSelection();s.removeAllRanges();s.addRange(r);toast("Notes selected. Press Ctrl+C or Cmd+C.")}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){toast("Notes copied")},fallback)}else{fallback()}
+  });
+  var cl=$("#clearN"),ct;
+  cl.addEventListener("click",function(){
+    if(cl.getAttribute("data-arm")==="1"){ed.innerHTML=starter;save();cl.removeAttribute("data-arm");cl.textContent="Clear all";toast("Notes cleared");return}
+    cl.setAttribute("data-arm","1");cl.textContent="Tap again to clear";clearTimeout(ct);
+    ct=setTimeout(function(){cl.removeAttribute("data-arm");cl.textContent="Clear all"},3000);
+  });
+})();
+</script>
+
+</body>
+</html>
