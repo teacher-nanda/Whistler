@@ -203,6 +203,7 @@ section.step{padding-block:68px 8px}
 .wrapgrid ul{margin:0;padding-left:20px;display:grid;gap:8px}
 .locked{border-style:dashed;background:transparent;box-shadow:none;display:flex;flex-direction:column;justify-content:center;gap:6px;color:var(--muted)}
 .locked h3{color:var(--ink)}
+.nextlink{display:inline-block;color:var(--accent);font-weight:700;text-decoration:none;border-bottom:2px solid currentColor}
 footer{padding-block:60px 120px;color:var(--muted);font-size:.95rem;text-align:center}
 
 /* NOTES DRAWER */
@@ -304,7 +305,7 @@ body.notes-open .fab{display:none}
   .hero-inner{padding-block:28px 34px}
   .hero h1{font-size:4rem}
   section.step{padding-block:0 0;break-before:page}
-  section.step#warmup{break-before:auto;padding-top:22px}
+  section.step#warmup,section.step#c2-warmup{break-before:auto;padding-top:22px}
   .sec-head h2{font-size:2rem}
   .intro{margin-bottom:16px}
   .card,.q,.lane,.person,.flip,.quote,.tree,.round>h3,.gq{break-inside:avoid}
@@ -360,7 +361,7 @@ body.notes-open .fab{display:none}
       <p class="label eyebrow">Book Club</p>
       <h1>Whistler</h1>
       <p class="by">a novel by Ann Patchett</p>
-      <div class="chapters"><a class="chbtn" href="#chapter1">Chapter 1 <span aria-hidden="true">→</span></a></div>
+      <div class="chapters"><a class="chbtn" href="#chapter1">Chapter 1 <span aria-hidden="true">→</span></a><a class="chbtn" href="#chapter2">Chapter 2 <span aria-hidden="true">→</span></a></div>
       <div class="pr-head"><p class="pr-big">Check out our Book Club!</p><p class="pr-sub">Read along with us, and see what we think, at</p><a href="https://teacher-nanda.github.io/Whistler/">teacher-nanda.github.io/Whistler</a></div>
     </div>
   </header>
@@ -380,7 +381,7 @@ body.notes-open .fab{display:none}
     </div>
     <div class="board" id="board"><button class="empty-add" id="ghostAdd" type="button">+ Add your first post-it</button></div>
   </main>
-  <p class="homefoot">Page version 16</p>
+  <p class="homefoot">Page version 17</p>
   <section id="printWall"><h2>Our post-its</h2><p class="sub" id="pwDate"></p><div class="pw-grid" id="pwGrid"></div></section>
 </div>
 
@@ -671,7 +672,7 @@ body.notes-open .fab{display:none}
   <p class="intro">Write your <b>prediction</b> in your notes. We will check it next time.</p>
   <div class="wrapgrid">
     <div class="card"><h3>Make a prediction</h3><ul><li>Daphne says her mother “<mark class="k">managed something so heroic</mark> that there should have been songs written about her.” What do you think it was?</li><li>Will Daphne tell her mother about Eddie?</li><li>What do you expect Eddie to do next?</li></ul><div class="pick-bar"><button class="btn small" id="predNote" type="button">Add these to my notes</button></div></div>
-    <div class="card locked"><span class="label">Next time</span><h3>Part 2 · coming soon</h3><p>We will start by checking our predictions.</p></div>
+    <div class="card locked"><span class="label">Next time</span><h3>Chapter 2 is ready</h3><p>We will start by checking our predictions.</p><p><a class="nextlink" href="#chapter2">Open Chapter 2 →</a></p></div>
   </div>
 </section>
 
@@ -703,6 +704,326 @@ body.notes-open .fab{display:none}
   <div class="dfoot"><span class="st" id="st">Saved on this device</span><button class="btn small" id="savePdf" type="button">Save PDF</button><button class="btn ghost small" id="clearN" type="button">Clear all</button></div>
 </aside>
 </div><!-- /ch1 -->
+
+<div id="ch2" hidden>
+<header class="hero">
+  <svg class="hero-art" viewBox="0 0 1200 480" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="glow3" cx="50%" cy="100%" r="80%"><stop offset="0" stop-color="#E9B25A" stop-opacity=".55"/><stop offset="1" stop-color="#E9B25A" stop-opacity="0"/></radialGradient>
+      <linearGradient id="milky3" x1="0" x2="1"><stop offset="0" stop-color="#F6E8AE" stop-opacity="0"/><stop offset=".5" stop-color="#F6E8AE" stop-opacity=".16"/><stop offset="1" stop-color="#F6E8AE" stop-opacity="0"/></linearGradient>
+    </defs>
+    <ellipse cx="900" cy="150" rx="420" ry="46" fill="url(#milky3)" transform="rotate(-24 900 150)"/>
+    <g id="stars3"></g>
+    <path d="M520 480 C640 360 760 400 860 320 C960 240 1100 300 1200 220 L1200 480 Z" fill="#090C24"/>
+    <path d="M700 480 C800 420 780 360 880 330 S1040 280 1000 215" fill="none" stroke="#1D2552" stroke-width="40" stroke-linecap="round"/>
+    <path d="M700 480 C800 420 780 360 880 330 S1040 280 1000 215" fill="none" stroke="#4A5CAA" stroke-width="2" stroke-dasharray="10 12" stroke-linecap="round"/>
+    <g transform="translate(862 318) rotate(-18)" fill="#05071A" stroke="#4A5CAA" stroke-width="1">
+      <rect x="-24" y="-10" width="48" height="14" rx="3"/><rect x="-14" y="-18" width="30" height="10" rx="3"/>
+      <circle cx="-14" cy="6" r="5"/><circle cx="14" cy="6" r="5"/>
+    </g>
+    <text x="1160" y="44" text-anchor="end" fill="#F6E8AE" font-size="14" font-weight="700" letter-spacing="2.4" font-family="Atkinson Hyperlegible, sans-serif">THEN · THE NIGHT IN THE CAR</text>
+    <rect x="0" y="0" width="560" height="480" fill="url(#glow3)"/>
+    <g fill="#E9B25A" opacity=".2">
+      <path d="M30 480V270a70 70 0 0 1 140 0V480Z"/><path d="M210 480V230a70 70 0 0 1 140 0V480Z"/><path d="M390 480V270a70 70 0 0 1 140 0V480Z"/>
+    </g>
+    <g fill="#E9B25A" opacity=".16"><path d="M52 480V275a48 48 0 0 1 96 0V480Z"/><path d="M232 480V235a48 48 0 0 1 96 0V480Z"/><path d="M412 480V275a48 48 0 0 1 96 0V480Z"/></g>
+    <text x="40" y="44" fill="#F6E8AE" font-size="14" font-weight="700" letter-spacing="2.4" font-family="Atkinson Hyperlegible, sans-serif">NOW · A PARTY IN NEW YORK</text>
+  </svg>
+  <div class="wrap hero-inner">
+    <a class="back" href="#home">← All chapters</a>
+    <p class="label eyebrow">Book Club · Meeting 2</p>
+    <h1>Whistler</h1>
+    <p class="by">a novel by Ann Patchett</p>
+    <div class="chips"><span>Chapter 2</span><span>50 minutes</span><span>Bring your highlights</span></div>
+  </div>
+</header>
+
+<nav class="agenda" aria-label="Lesson plan">
+  <div class="agenda-scroll wrap">
+    <ol>
+      <li><a href="#c2-warmup" data-s="c2-warmup"><span class="n">1</span>Warm-up</a></li>
+      <li><a href="#c2-story" data-s="c2-story"><span class="n">2</span>The story</a></li>
+      <li><a href="#c2-people" data-s="c2-people"><span class="n">3</span>The people</a></li>
+      <li><a href="#c2-close" data-s="c2-close"><span class="n">4</span>Words &amp; quotes</a></li>
+      <li><a href="#c2-discuss" data-s="c2-discuss"><span class="n">5</span>Discuss</a></li>
+      <li><a href="#c2-wrapup" data-s="c2-wrapup"><span class="n">6</span>Wrap-up</a></li>
+    </ol>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- 1 WARM-UP -->
+<section class="step" id="c2-warmup">
+  <div class="sec-head"><span class="badge">Step 1 · 5 min</span><h2>Warm-up: secrets and stories</h2></div>
+  <p class="intro">Chapter 2 has a <mark class="k">party</mark>, a <mark class="k">secret</mark>, and a story told in the dark. Pick <b>one question</b> and answer it in <mark class="k">two or three sentences</mark>. Everyone gets a turn.</p>
+  <div class="pick" id="c2-pick">
+    <div class="card"><span class="label">Question A</span><p>Have you ever asked someone to come with you because you <mark class="k">did not want to go alone</mark>? Where were you going, and why did it matter?</p></div>
+    <div class="card"><span class="label">Question B</span><p>Have you ever <mark class="k">kept a secret to protect someone</mark>, or told a small lie to be kind? Was it the right choice?</p></div>
+    <div class="card"><span class="label">Question C</span><p>Do you remember a <mark class="k">story someone told you</mark> when you were scared? What was it, and did it help?</p></div>
+  </div>
+  <div class="pick-bar"><button class="btn" id="c2-pickBtn" type="button">Pick a question for us</button><span class="tip" style="margin:0">Or choose your own.</span></div>
+</section>
+
+<!-- 2 STORY -->
+<section class="step" id="c2-story">
+  <div class="sec-head"><span class="badge">Step 2 · 8 min</span><h2>The story in two time layers</h2></div>
+  <p class="intro">Again the chapter moves between <mark class="k">the present</mark> and <mark class="k">the night of the accident</mark>. Keep both layers in mind.</p>
+  <div class="sixty">
+    <div class="card"><b class="lead">The party</b>Daphne calls <b>Eddie</b>, and soon she goes with him to a <mark class="k">fiftieth anniversary dinner</mark> for his friends Skip and Polly Hotalling. He introduces her as <mark class="k">“my daughter.”</mark></div>
+    <div class="card"><b class="lead">The secret</b>On the walk after the party, Eddie finally explains <mark class="k">why he left</mark>: his love for <b>Skip</b>, and <mark class="k">Abigail’s deal</mark>.</div>
+    <div class="card"><b class="lead">The night in the car</b>We go back to the crash. Hanging in the dark, Eddie tells Daphne the story of <b>Mary Carter</b> and her horse, <b>Whistler</b>.</div>
+  </div>
+  <div class="lanes">
+    <div class="lane now">
+      <p class="where">Now · New York City</p>
+      <h3>Daphne is 53</h3>
+      <ol class="beats">
+        <li><b class="lead">At Leda’s</b>Daphne has to go home. Leda still wants to hear about the accident. “What’s the punch line?” <mark class="k">“We lived.”</mark></li>
+        <li><b class="lead">A trip and an argument</b>Jonathan leaves for Wisconsin to <mark class="k">clean out his mother’s house</mark> with his sister Bea. He wants to go to <b>Fiji</b>. Daphne <mark class="k">has not flown</mark> since her father died.</li>
+        <li><b class="lead">Calling Eddie</b>Daphne calls him. He mentions a party, and she goes with him. He says, <mark class="k">“Don’t tell your mother.”</mark> She also keeps it from Jonathan.</li>
+        <li><b class="lead">Leda’s apartment</b>Eddie arrives in a <b>tuxedo</b> with lilies of the valley and walks <mark class="k">straight into Leda’s arms</mark>. Henry whispers a guess about why Abigail divorced him.</li>
+        <li><b class="lead">The Century Club</b>Eddie calls Daphne <mark class="k">his daughter</mark> all night. In his speech he tells the story of <b>Yale</b> and his friend Skip.</li>
+        <li><b class="lead">The walk</b>They <mark class="k">crash a wedding</mark> at the Plaza and dance. Then Eddie tells her everything, including <mark class="k">the picture of the horse</mark>.</li>
+      </ol>
+    </div>
+    <div class="lane then">
+      <p class="where">Then · A mountain road</p>
+      <h3>The night of the accident</h3>
+      <ol class="beats">
+        <li><b class="lead">The crash</b>Eddie says he <mark class="k">missed the curve</mark> and drove off the side of the mountain. Daphne is hanging by her seat belt. Eddie’s <b>left ankle and foot</b> are hurt.</li>
+        <li><b class="lead">“I’m going to be a writer”</b>Daphne tells Eddie her dream. He says he plans to be a writer too. <mark class="k">“Maybe we’ll write novels together.”</mark></li>
+        <li><b class="lead">The tie and the bag</b>Eddie ties his <b>tie</b> over a cut. Daphne finds <mark class="k">Buddy’s emergency bag</mark> in the back of the car.</li>
+        <li><b class="lead">The long night</b>They see <mark class="k">yellow eyes</mark> in the dark. Eddie is honest: <mark class="k">“I’d be afraid, too.”</mark></li>
+        <li><b class="lead">The story</b>Eddie tells her about <b>Mary Carter</b>, a storm, a fall, and a horse who comes when she <mark class="k">whistles</mark>.</li>
+        <li><b class="lead">The week after</b>Daphne <mark class="k">carries notes</mark> between Leda and Eddie in the hospital. Four days later, her mother says she and Eddie are <b>getting divorced</b>.</li>
+      </ol>
+    </div>
+  </div>
+  <p class="bridge">The two layers meet in one object: the <strong>picture of the horse</strong> that came with a book proposal in 1980 and still sits in a frame on Eddie’s desk.</p>
+</section>
+
+<!-- 3 PEOPLE -->
+<section class="step" id="c2-people">
+  <div class="sec-head"><span class="badge">Step 3 · 7 min</span><h2>Who is who</h2></div>
+  <div class="tree" aria-label="Eddie’s story with Skip, in order">
+    <p class="tree-title label">Eddie’s story with Skip, in order</p>
+    <div class="t">Yale<small>Eddie and Skip are roommates</small></div>
+    <span class="arrow" aria-hidden="true">→</span>
+    <div class="t">Skip marries Polly<small>Eddie is the best man</small></div>
+    <span class="arrow" aria-hidden="true">→</span>
+    <div class="t hot">Abigail’s deal<small>give up Skip, and give up being gay</small></div>
+  </div>
+  <div class="people">
+    <article class="card person">
+      <div class="top"><div class="av" style="background:#3F57C0">E</div><div><h3>Eddie Triplett</h3><p class="role">Daphne’s stepfather, long ago</p></div></div>
+      <span class="tag both">Now and then</span>
+      <ul><li>Went to <b>Yale</b> and wanted to write the <mark class="k">great American novel</mark>.</li><li>Has an older brother, <b>Martin</b>, and a younger sister, <b>Amy</b>, from <b>Altoona, Pennsylvania</b>.</li><li>Quit smoking after the accident and <mark class="k">started again</mark> about six weeks ago.</li></ul>
+    </article>
+    <article class="card person">
+      <div class="top"><div class="av" style="background:#B0214D">D</div><div><h3>Daphne</h3><p class="role">Narrator · Daphne Fuller, born Zabriskie</p></div></div>
+      <span class="tag both">Now and then</span>
+      <ul><li>Has <mark class="k">not flown</mark> since her father died.</li><li>Is happy to see Eddie, but <mark class="k">keeps the party from Jonathan</mark>.</li><li>At nine, she <mark class="k">believed the divorce was her fault</mark>.</li></ul>
+    </article>
+    <article class="card person">
+      <div class="top"><div class="av" style="background:#B7791F">J</div><div><h3>Jonathan</h3><p class="role">Daphne’s husband</p></div></div>
+      <span class="tag now">Now</span>
+      <ul><li><b>Newly seventy</b>, and a little <mark class="k">unsettled by free time</mark> in retirement.</li><li>Wants to travel, <b>especially to Fiji</b>.</li><li>In Wisconsin with his sister <b>Bea</b>, he says he feels he will <mark class="k">“fall into the past.”</mark></li></ul>
+    </article>
+    <article class="card person">
+      <div class="top"><div class="av" style="background:#0F8B8D">H</div><div><h3>Henry</h3><p class="role">Leda and Steve’s son</p></div></div>
+      <span class="tag now">Now</span>
+      <ul><li>Up late <mark class="k">playing a video game</mark> with someone in Reykjavík.</li><li>Daphne calls him <mark class="k">“such a good boy.”</mark></li><li><mark class="k">Guesses the secret</mark> behind the divorce.</li></ul>
+    </article>
+    <article class="card person">
+      <div class="top"><div class="av" style="background:#7A4FA3">S</div><div><h3>Skip and Polly Hotalling</h3><p class="role">Eddie’s old friends</p></div></div>
+      <span class="tag both">Now and then</span>
+      <ul><li>Skip was Eddie’s <b>roommate at Yale</b>. Polly went to <b>Pine Manor</b>.</li><li>They are celebrating <mark class="k">fifty years of marriage</mark>.</li><li>Eddie stayed with them after Abigail sent him away.</li></ul>
+    </article>
+    <article class="card person">
+      <div class="top"><div class="av" style="background:#555F7D">M</div><div><h3>Mary Carter</h3><p class="role">A rancher in Wyoming</p></div></div>
+      <span class="tag then">Eddie’s story</span>
+      <ul><li>Lived on a ranch about <b>fifty miles south of Sheridan</b>.</li><li>Her horse is <b>Whistler</b>, who comes when she <mark class="k">whistles</mark>.</li><li>Her son <b>Jeffrey</b> died three years before her accident.</li></ul>
+    </article>
+  </div>
+</section>
+
+<!-- 4 WORDS AND QUOTES -->
+<section class="step" id="c2-close">
+  <div class="sec-head"><span class="badge">Step 4 · 10 min</span><h2>Close reading: quotes and words</h2></div>
+  <p class="intro">Take a few minutes on <b>six lines</b> from the chapter. Tap “Think about it” for a question. Use “Add to notes” to save a line to your notes.</p>
+  <div class="quotes">
+    <article class="card quote">
+      <blockquote>Lying had never felt like such an act of kindness.</blockquote>
+      <p class="ctx">Daphne, after telling Jonathan she has not called Eddie yet</p>
+      <div class="reveal" hidden>Lying and kindness are <mark class="k">opposites</mark> here. Who is she being kind to? Is it <mark class="k">really</mark> kindness, or a way to avoid a hard talk?</div>
+      <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
+    </article>
+    <article class="card quote">
+      <blockquote>We continued to believe in one another’s dreams long after giving up on our own.</blockquote>
+      <p class="ctx">Eddie, in his speech about Skip</p>
+      <div class="reveal" hidden>Eddie says <mark class="k">“Both of us failed”</mark> at their dreams. Is this sentence sad, happy, or both? What kind of friendship does it describe?</div>
+      <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
+    </article>
+    <article class="card quote">
+      <blockquote>I learned what it meant to be married not by watching my parents, but by watching the two of them.</blockquote>
+      <p class="ctx">Eddie, speaking about Skip and Polly</p>
+      <div class="reveal" hidden>Eddie says this in front of a big room. Read it again <mark class="k">after the walk</mark>, when we know his secret. Does it mean something different now?</div>
+      <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
+    </article>
+    <article class="card quote">
+      <blockquote>It wasn’t that Eddie was talking to her like she was another adult, but he was talking to her like they were two equal people.</blockquote>
+      <p class="ctx">The night in the crashed car</p>
+      <div class="reveal" hidden>The narrator separates <mark class="k">“another adult”</mark> from <mark class="k">“two equal people.”</mark> What is the difference? Why would this matter to a nine-year-old?</div>
+      <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
+    </article>
+    <article class="card quote">
+      <blockquote>Eddie should never have been in charge of a child, especially not a child he dearly loved.</blockquote>
+      <p class="ctx">When Eddie’s story gets too scary for Daphne</p>
+      <div class="reveal" hidden>Eddie only wanted to <mark class="k">take her mind off</mark> the cold and the fear. Why does the narrator say he <mark class="k">should never</mark> have been in charge? Do you agree?</div>
+      <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
+    </article>
+    <article class="card quote">
+      <blockquote>Mary Carter was made of patience. Her whole life was patience.</blockquote>
+      <p class="ctx">Eddie’s story, while Mary lies hurt</p>
+      <div class="reveal" hidden>The second sentence <mark class="k">repeats</mark> the first. What does this repetition do? Is <mark class="k">patience</mark> a strength here, or the only choice she has?</div>
+      <div class="qactions"><button class="btn ghost small rv" type="button" aria-expanded="false">Think about it</button><button class="btn ghost small an" type="button">Add to notes</button></div>
+    </article>
+  </div>
+
+  <div class="words-head"><h3>Words from the chapter</h3><p class="tip">Tap a card to see the meaning and the sentence from the story.</p></div>
+  <div class="words">
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">game</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">happy to try new or surprising things</span><span class="ex">Eddie: “Your mother was extremely game.”</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">flummoxed</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">so confused that you do not know what to do</span><span class="ex">Eddie about Buddy: “He was completely flummoxed by girls.”</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">besotted</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">so fond of someone or something that you cannot stop thinking about it</span><span class="ex">“Polly was besotted with children.”</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">pontificating</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">speaking as if you are sure you are right, usually for too long</span><span class="ex">Eddie about Lucas: “What a pontificating bore of a man.”</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">antidote</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">something that helps you recover from a bad thing</span><span class="ex">“It’s the perfect antidote to a fiftieth wedding anniversary dinner.”</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">off-ramp</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">a road that lets you leave a highway. Here it means a way out.</span><span class="ex">“She was offering me an off-ramp from the half-life I’d been living.”</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">reconnaissance</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">looking around carefully to learn what is there</span><span class="ex">“What are you doing?” Eddie called. “Reconnaissance,” Daphne said.</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">vestiges</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">small signs that something was once there</span><span class="ex">“There were few remaining vestiges of Buddy Zabriskie in their life.”</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">vigilant</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">watching carefully, so that you do not miss anything</span><span class="ex">Eddie pinned the horse’s picture up “to remind myself to be vigilant.”</span></span></button>
+    <button class="flip" type="button" aria-pressed="false"><span class="front"><span class="w">off the cuff</span><span class="hint">tap for meaning</span></span><span class="back" hidden><span class="def">without planning or notes</span><span class="ex">Eddie looks at a paper, then puts it away, “a bit of theater to say he was going off the cuff.”</span></span></button>
+  </div>
+</section>
+
+<!-- 5 DISCUSS -->
+<section class="step" id="c2-discuss">
+  <div class="sec-head"><span class="badge">Step 5 · 15 min</span><h2>Let’s discuss</h2></div>
+
+  <p class="tip">You do not need every question. Choose <b>the ones your group likes</b>. Tick a question when you have talked about it.</p>
+  <div class="progress"><span id="c2-progTxt">0 of 11 discussed</span><div class="bar"><i id="c2-progBar"></i></div></div>
+
+  <div class="round">
+    <h3>Round 1 · Understanding <small>about 3 min</small></h3>
+    <div class="q"><span class="qn">1</span><div class="qt">After the accident, why does nine-year-old Daphne believe the <mark class="k">divorce was her fault</mark>?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Her mother said, “I can’t trust him with my children.” Daphne says she had to get divorced “for my safety.”</div></div></div>
+    <div class="q"><span class="qn">2</span><div class="qt">What is the <mark class="k">disagreement</mark> between Daphne and Jonathan about travel?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>He wants to go to Fiji and says, “It’s that you can’t ever go places with me.” She answers, “I’ve been a non-flying schoolteacher.”</div></div></div>
+    <div class="q"><span class="qn">3</span><div class="qt">What does Eddie tell Daphne about <mark class="k">Skip</mark> and about <mark class="k">her mother’s deal</mark>?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Think about the dorm room, the plan for a second life, and the walk through the Commons. What did Abigail ask him to give up?</div></div></div>
+  </div>
+
+  <div class="round">
+    <h3>Round 2 · Digging deeper <small>about 8 min</small></h3>
+    <div class="q"><span class="qn">4</span><div class="qt">Eddie introduces Daphne as <mark class="k">“my daughter”</mark> to people who know he has no daughter. Daphne feels a part of her is <mark class="k">thrilled</mark>. Why does it matter so much to her?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>She says he never would have done it if Buddy were alive. For her, it means “he had chosen me.”</div></div></div>
+    <div class="q"><span class="qn">5</span><div class="qt">Daphne does not tell Jonathan about the party. Eddie tells her not to tell her mother. Are these <mark class="k">kind secrets</mark>, or <mark class="k">risky ones</mark>?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>She calls it “the more troubling omission” and says Jonathan would never tell her not to go, “but it would bother him.”</div></div></div>
+    <div class="q"><span class="qn">6</span><div class="qt">Eddie says Abigail “didn’t know any better” and calls her <mark class="k">“a prince”</mark> for keeping the secret. Daphne feels sad for her mother. How do <mark class="k">Eddie and Daphne judge Abigail</mark>?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Daphne thinks her mother lost Eddie to Skip “having already lost Buddy Zabriskie to the sea.”</div></div></div>
+    <div class="q"><span class="qn">7</span><div class="qt">Eddie says of his friendship with Skip, “We continued to believe in one another’s dreams long after giving up on our own.” Is that <mark class="k">a good life or a sad one</mark>?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Eddie planned to write the great American novel. Skip planned to be a lawyer. Eddie says, “Both of us failed.” He also says he had a friend “to see me through the rest of my life.”</div></div></div>
+    <div class="q"><span class="qn">8</span><div class="qt">In the car, Daphne says she would be afraid alone. Eddie answers, <mark class="k">“I’d be afraid, too.”</mark> Is it better to tell a scared child the truth?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>The narrator says, “Eddie’s way was honest and infinitely preferable.” Later Eddie says, “I should have tried to protect you, but we’re way past that now.”</div></div></div>
+  </div>
+
+  <div class="round">
+    <h3>Round 3 · The big picture <small>about 4 min</small></h3>
+    <div class="q"><span class="qn">9</span><div class="qt">Why did Eddie tell the story of <mark class="k">Mary Carter and Whistler</mark> in the car? And why does he still keep the picture of the horse?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>He says he found the horse “comforting.” At the end of the story Daphne knows why he told it: “They weren’t going to die.”</div></div></div>
+    <div class="q"><span class="qn">10</span><div class="qt">Daphne says she would have sworn the story <mark class="k">wasn’t true</mark>. It was a real book proposal. Why do <mark class="k">true stories</mark> sometimes feel invented?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Eddie says Mary was shy and polite, and after she died her daughter found his letters. Authors, he says, “always go straight to Whistler.”</div></div></div>
+    <div class="q"><span class="qn">11</span><div class="qt">Jonathan says he feels he will <mark class="k">“fall into the past”</mark> in Wisconsin. Daphne has been stuck on the week of the accident. Does the past <mark class="k">ever let go</mark>?</div><div class="body"><div class="qrow"><button class="btn ghost small hn" type="button" aria-expanded="false">Hint</button><button class="btn ghost small an" type="button">Add to notes</button><label class="chk"><input type="checkbox" class="dn"> Discussed</label></div><div class="hint" hidden>Daphne notices that two married people are “falling into their own separate pasts” far apart at the same time.</div></div></div>
+  </div>
+
+  <div class="card bonus" id="c2-game">
+    <h3>Bonus game: who said it?</h3>
+    <p class="tip" style="margin:0">Read each line and tap the <b>person</b> who said it. You see the answer right away. Two rounds, three lines each.</p>
+    <div class="game-head"><div class="steps" id="c2-gSteps"><span class="on" data-r="1">Round 1</span><span data-r="2">Round 2</span><span data-r="3">Final score</span></div><div class="gscore" id="c2-gScore">Score: 0 / 6</div></div>
+    <div class="gr" data-r="1">
+      <p class="pr-only label">Round 1</p>
+      <div class="gq" data-a="Jonathan">
+        <p class="gt">1. “I want to go to Fiji.”</p>
+        <div class="tfrow"><button class="tf" type="button" data-v="Daphne">Daphne</button><button class="tf" type="button" data-v="Eddie">Eddie</button><button class="tf" type="button" data-v="Leda">Leda</button><button class="tf" type="button" data-v="Jonathan">Jonathan</button><button class="tf" type="button" data-v="Abigail">Abigail</button><button class="tf" type="button" data-v="Skip">Skip</button></div>
+        <div class="fb" hidden aria-live="polite"><span class="vr"></span><b>The answer is Jonathan.</b> He says it as they argue about travel. Daphne <mark class="k">will not fly</mark>.</div>
+      </div>
+      <div class="gq" data-a="Abigail">
+        <p class="gt">2. “I can’t trust him. I can’t trust him with my children.”</p>
+        <div class="tfrow"><button class="tf" type="button" data-v="Daphne">Daphne</button><button class="tf" type="button" data-v="Eddie">Eddie</button><button class="tf" type="button" data-v="Leda">Leda</button><button class="tf" type="button" data-v="Jonathan">Jonathan</button><button class="tf" type="button" data-v="Abigail">Abigail</button><button class="tf" type="button" data-v="Skip">Skip</button></div>
+        <div class="fb" hidden aria-live="polite"><span class="vr"></span><b>The answer is Abigail.</b> She says it about Eddie, after the accident, when she explains the <mark class="k">divorce</mark> to Daphne.</div>
+      </div>
+      <div class="gq" data-a="Leda">
+        <p class="gt">3. “Ask Eddie to come early and have a drink with us.”</p>
+        <div class="tfrow"><button class="tf" type="button" data-v="Daphne">Daphne</button><button class="tf" type="button" data-v="Eddie">Eddie</button><button class="tf" type="button" data-v="Leda">Leda</button><button class="tf" type="button" data-v="Jonathan">Jonathan</button><button class="tf" type="button" data-v="Abigail">Abigail</button><button class="tf" type="button" data-v="Skip">Skip</button></div>
+        <div class="fb" hidden aria-live="polite"><span class="vr"></span><b>The answer is Leda.</b> She wanted to <mark class="k">get it right</mark>, so Daphne told her Eddie drinks Chardonnay.</div>
+      </div>
+      <div class="gsum" hidden><p class="gres"></p><button class="btn gnext" type="button">Start Round 2</button></div>
+    </div>
+    <div class="gr" data-r="2" hidden>
+      <p class="pr-only label">Round 2</p>
+      <div class="gq" data-a="Daphne">
+        <p class="gt">4. “Maybe we’ll write novels together.”</p>
+        <div class="tfrow"><button class="tf" type="button" data-v="Daphne">Daphne</button><button class="tf" type="button" data-v="Eddie">Eddie</button><button class="tf" type="button" data-v="Leda">Leda</button><button class="tf" type="button" data-v="Jonathan">Jonathan</button><button class="tf" type="button" data-v="Abigail">Abigail</button><button class="tf" type="button" data-v="Skip">Skip</button></div>
+        <div class="fb" hidden aria-live="polite"><span class="vr"></span><b>The answer is Daphne.</b> She says it in the crashed car, after Eddie tells her he plans to be a <mark class="k">writer</mark> too.</div>
+      </div>
+      <div class="gq" data-a="Eddie">
+        <p class="gt">5. “Buddy Zabriskie, you are some sort of man.”</p>
+        <div class="tfrow"><button class="tf" type="button" data-v="Daphne">Daphne</button><button class="tf" type="button" data-v="Eddie">Eddie</button><button class="tf" type="button" data-v="Leda">Leda</button><button class="tf" type="button" data-v="Jonathan">Jonathan</button><button class="tf" type="button" data-v="Abigail">Abigail</button><button class="tf" type="button" data-v="Skip">Skip</button></div>
+        <div class="fb" hidden aria-live="polite"><span class="vr"></span><b>The answer is Eddie.</b> He says it after Daphne finds her father’s <mark class="k">emergency bag</mark> in the back of the car.</div>
+      </div>
+      <div class="gq" data-a="Skip">
+        <p class="gt">6. “I could have spent fifty years guessing who I might be seated next to this evening and I don’t think I would have come up with you.”</p>
+        <div class="tfrow"><button class="tf" type="button" data-v="Daphne">Daphne</button><button class="tf" type="button" data-v="Eddie">Eddie</button><button class="tf" type="button" data-v="Leda">Leda</button><button class="tf" type="button" data-v="Jonathan">Jonathan</button><button class="tf" type="button" data-v="Abigail">Abigail</button><button class="tf" type="button" data-v="Skip">Skip</button></div>
+        <div class="fb" hidden aria-live="polite"><span class="vr"></span><b>The answer is Skip.</b> He sits next to Daphne at the <mark class="k">anniversary dinner</mark> and calls her by her old name, Zabriskie.</div>
+      </div>
+      <div class="gsum" hidden><p class="gres"></p><button class="btn gnext" type="button">See my final score</button></div>
+    </div>
+    <div class="gr gfinal" data-r="3" hidden>
+      <div class="big" id="c2-gBig">0 / 6</div>
+      <p id="c2-gMsg"></p>
+      <button class="btn" id="c2-gAgain" type="button">Play again</button>
+    </div>
+  </div>
+</section>
+
+<!-- 6 WRAP-UP -->
+<section class="step" id="c2-wrapup">
+  <div class="sec-head"><span class="badge">Step 6 · 5 min</span><h2>Wrap-up</h2></div>
+  <p class="intro">Write your <b>prediction</b> in your notes. We will check it next time.</p>
+  <div class="wrapgrid">
+    <div class="card"><h3>Make a prediction</h3><ul><li>Daphne asked Eddie to <mark class="k">call her tomorrow</mark>. What will they do next?</li><li>What will Daphne say to <mark class="k">her mother</mark> about Eddie, and what will she keep to herself?</li><li>Will Daphne ever <mark class="k">fly</mark> with Jonathan?</li></ul><div class="pick-bar"><button class="btn small" id="c2-predNote" type="button">Add these to my notes</button></div></div>
+    <div class="card locked"><span class="label">Next time</span><h3>Chapter 3 · coming soon</h3><p>We will start by checking our predictions.</p></div>
+  </div>
+</section>
+
+<section class="print-notes" id="c2-printNotes"><h2>My notes</h2><div class="pn-body" id="c2-pnBody"></div></section>
+
+</main>
+
+<footer class="wrap">Based on the club’s reading highlights from Chapter 2 of Whistler by Ann Patchett.</footer>
+
+<button class="fab" id="c2-fab" type="button" aria-controls="c2-drawer" aria-expanded="false">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+  My notes
+</button>
+<aside class="drawer" id="c2-drawer" aria-label="My notes" role="dialog">
+  <div class="dhead"><h3>My notes</h3><button class="btn ghost small" id="c2-closeN" type="button">Close</button></div>
+  <div class="tb" id="c2-tb" role="toolbar" aria-label="Formatting">
+    <button type="button" data-c="bold" title="Bold" aria-label="Bold"><b>B</b></button>
+    <button type="button" data-c="underline" title="Underline" aria-label="Underline"><u>U</u></button>
+    <button type="button" data-c="strikeThrough" title="Strikethrough" aria-label="Strikethrough"><s>S</s></button>
+    <span class="sep"></span>
+    <button type="button" class="sw" data-h="#FFE55C" title="Highlight yellow" aria-label="Highlight yellow"><i style="background:#FFE55C"></i></button>
+    <button type="button" class="sw" data-h="#FFB3C7" title="Highlight pink" aria-label="Highlight pink"><i style="background:#FFB3C7"></i></button>
+    <button type="button" class="sw" data-h="#A8F0C0" title="Highlight green" aria-label="Highlight green"><i style="background:#A8F0C0"></i></button>
+    <button type="button" class="sw" data-h="#A9CBFF" title="Highlight blue" aria-label="Highlight blue"><i style="background:#A9CBFF"></i></button>
+    <button type="button" class="sw none" data-h="transparent" title="Remove highlight" aria-label="Remove highlight"><i></i></button>
+  </div>
+  <div class="editor" id="c2-editor" contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Notes"></div>
+  <div class="dfoot"><span class="st" id="c2-st">Saved on this device</span><button class="btn small" id="c2-savePdf" type="button">Save PDF</button><button class="btn ghost small" id="c2-clearN" type="button">Clear all</button></div>
+</aside>
+</div><!-- /ch2 -->
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -712,7 +1033,7 @@ body.notes-open .fab{display:none}
   function store(k,v){try{if(v===undefined){return localStorage.getItem(k)}localStorage.setItem(k,v);}catch(e){return null}}
 
   /* stars */
-  ["stars","stars2"].forEach(function(id){
+  ["stars","stars2","stars3"].forEach(function(id){
     var g=document.getElementById(id), seed=7, ns="http://www.w3.org/2000/svg";
     function r(){seed=(seed*16807)%2147483647;return seed/2147483647}
     for(var i=0;i<90;i++){
@@ -729,6 +1050,8 @@ body.notes-open .fab{display:none}
   var toastEl=$("#toast"), tt;
   function toast(m){toastEl.textContent=m;toastEl.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){toastEl.classList.remove("on")},2200)}
 
+  function initCh(root,P,KEY,PRED){
+    var $=function(s,r){return (r||root).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||root).querySelectorAll(s))};
   /* scroll spy */
   var links=$$(".agenda a");
   if("IntersectionObserver" in window){
@@ -737,8 +1060,8 @@ body.notes-open .fab{display:none}
   }
 
   /* warm-up picker */
-  var cards=$$("#pick .card"), last=-1;
-  $("#pickBtn").addEventListener("click",function(){
+  var cards=$$("#"+P+"pick .card"), last=-1;
+  $("#"+P+"pickBtn").addEventListener("click",function(){
     var n;do{n=Math.floor(Math.random()*cards.length)}while(n===last&&cards.length>1);
     last=n;cards.forEach(function(c,i){c.classList.toggle("hi",i===n)});
     cards[n].scrollIntoView({block:"nearest",behavior:"smooth"});
@@ -761,10 +1084,10 @@ body.notes-open .fab{display:none}
 
   /* true or false game */
   (function(){
-    var rs=$$("#game .gr"), pills=$$("#gSteps span"), scoreEl=$("#gScore"), score=0, cur=1;
+    var rs=$$("#"+P+"game .gr"), pills=$$("#"+P+"gSteps span"), scoreEl=$("#"+P+"gScore"), score=0, cur=1;
     function show(n){cur=n;rs.forEach(function(r){r.hidden=(+r.getAttribute("data-r")!==n)});
       pills.forEach(function(p){var k=+p.getAttribute("data-r");p.classList.toggle("on",k===n);p.classList.toggle("done",k<n)})}
-    $$("#game .gq").forEach(function(q){
+    $$("#"+P+"game .gq").forEach(function(q){
       $$(".tf",q).forEach(function(b){b.addEventListener("click",function(){
         if(q.getAttribute("data-done"))return;q.setAttribute("data-done","1");
         var ans=q.getAttribute("data-a"), ok=b.getAttribute("data-v")===ans;
@@ -779,42 +1102,42 @@ body.notes-open .fab{display:none}
         }
       })});
     });
-    $$("#game .gnext").forEach(function(b){b.addEventListener("click",function(){
+    $$("#"+P+"game .gnext").forEach(function(b){b.addEventListener("click",function(){
       var n=cur+1;show(n);
-      if(n===3){$("#gBig").textContent=score+" / 6";
-        $("#gMsg").textContent=score===6?"Perfect! You read very carefully.":score>=4?"Great job! You remember the chapter well.":"Good try! Look at the story again and play one more time.";}
-      var g=$("#game");if(g.scrollIntoView)g.scrollIntoView({block:"start",behavior:"smooth"});
+      if(n===3){$("#"+P+"gBig").textContent=score+" / 6";
+        $("#"+P+"gMsg").textContent=score===6?"Perfect! You read very carefully.":score>=4?"Great job! You remember the chapter well.":"Good try! Look at the story again and play one more time.";}
+      var g=$("#"+P+"game");if(g.scrollIntoView)g.scrollIntoView({block:"start",behavior:"smooth"});
     })});
-    $("#gAgain").addEventListener("click",function(){
+    $("#"+P+"gAgain").addEventListener("click",function(){
       score=0;scoreEl.textContent="Score: 0 / 6";
-      $$("#game .gq").forEach(function(q){q.removeAttribute("data-done");q.classList.remove("ok","bad");
+      $$("#"+P+"game .gq").forEach(function(q){q.removeAttribute("data-done");q.classList.remove("ok","bad");
         $$(".tf",q).forEach(function(x){x.disabled=false;x.classList.remove("pok","pbad","right")});
         var fb=$(".fb",q);fb.hidden=true;fb.classList.remove("ok","bad")});
-      $$("#game .gsum").forEach(function(x){x.hidden=true});show(1);
+      $$("#"+P+"game .gsum").forEach(function(x){x.hidden=true});show(1);
     });
   })();
 
   /* progress */
-  var dn=$$(".dn"), pt=$("#progTxt"), pb=$("#progBar");
+  var dn=$$(".dn"), pt=$("#"+P+"progTxt"), pb=$("#"+P+"progBar");
   function prog(){var c=dn.filter(function(x){return x.checked}).length;pt.textContent=c+" of "+dn.length+" discussed";pb.style.width=(c/dn.length*100)+"%"}
   dn.forEach(function(x){x.addEventListener("change",function(){x.closest(".q").classList.toggle("done",x.checked);prog()})});
   prog();
 
   /* notes drawer */
-  var drawer=$("#drawer"), fab=$("#fab"), ed=$("#editor"), st=$("#st");
+  var drawer=$("#"+P+"drawer"), fab=$("#"+P+"fab"), ed=$("#"+P+"editor"), st=$("#"+P+"st");
   var starter="";
   var oldStarter="<h3>My first reactions</h3><p><br></p><h3>Questions I have</h3><p><br></p><h3>Words to remember</h3><p><br></p><h3>My predictions</h3><p><br></p>";
   var saved=store(KEY);
   ed.innerHTML=(saved&&saved!==oldStarter)?saved:starter;
   function setOpen(o){drawer.classList.toggle("open",o);document.body.classList.toggle("notes-open",o);fab.setAttribute("aria-expanded",o);if(o){setTimeout(function(){ed.focus()},260)}}
   fab.addEventListener("click",function(){setOpen(!drawer.classList.contains("open"))});
-  $("#closeN").addEventListener("click",function(){setOpen(false);fab.focus()});
+  $("#"+P+"closeN").addEventListener("click",function(){setOpen(false);fab.focus()});
   document.addEventListener("keydown",function(e){if(e.key==="Escape"&&drawer.classList.contains("open")){setOpen(false)}});
   var sv;function save(){st.textContent="Saving…";clearTimeout(sv);sv=setTimeout(function(){var ok=store(KEY,ed.innerHTML);st.textContent=ok===null?"Notes stay on this page only":"Saved on this device"},400)}
   ed.addEventListener("input",save);
 
   function inEd(){var s=window.getSelection();return s&&s.rangeCount&&ed.contains(s.anchorNode)}
-  var tb=$("#tb");
+  var tb=$("#"+P+"tb");
   tb.addEventListener("mousedown",function(e){if(e.target.closest("button"))e.preventDefault()});
   tb.addEventListener("click",function(e){
     var b=e.target.closest("button");if(!b)return;
@@ -839,34 +1162,42 @@ body.notes-open .fab{display:none}
   $$(".q .an").forEach(function(b){b.addEventListener("click",function(){
     var q=b.closest(".q");
     addToNotes('<h3>Question '+esc($(".qn",q).textContent)+'</h3><p>'+esc($(".qt",q).textContent)+'</p><p><b>My answer:</b> </p>');})});
-  $("#predNote").addEventListener("click",function(){
-    addToNotes('<h3>Predictions for Part 2</h3><ul><li>What did the mother do that was heroic?</li><li>Will Daphne tell her mother about Eddie?</li><li>What will Eddie do next?</li></ul>');});
+  $("#"+P+"predNote").addEventListener("click",function(){
+    addToNotes(PRED);});
 
-  var pn=$("#printNotes"), pnb=$("#pnBody"), origTitle=document.title;
-  window.addEventListener("beforeprint",function(){
-    if(!homeEl.hidden){buildWall();origTitle=document.title;document.title="Whistler - post-it mural";return}
-    pnb.innerHTML=ed.innerHTML;pn.classList.toggle("has",ed.innerText.trim().length>0);
-    origTitle=document.title;document.title="Whistler - Chapter 1 slides and notes";
-  });
-  window.addEventListener("afterprint",function(){document.title=origTitle});
-  $("#savePdf").addEventListener("click",function(){
+  $("#"+P+"savePdf").addEventListener("click",function(){
     toast("In the print window, choose Save as PDF");
     setTimeout(function(){try{window.print()}catch(e){}},350);
   });
-  var cl=$("#clearN"),ct;
+  var cl=$("#"+P+"clearN"),ct;
   cl.addEventListener("click",function(){
     if(cl.getAttribute("data-arm")==="1"){ed.innerHTML=starter;save();cl.removeAttribute("data-arm");cl.textContent="Clear all";toast("Notes cleared");return}
     cl.setAttribute("data-arm","1");cl.textContent="Tap again to clear";clearTimeout(ct);
     ct=setTimeout(function(){cl.removeAttribute("data-arm");cl.textContent="Clear all"},3000);
   });
-  /* ---- router: home cover and chapters ---- */
-  var homeEl=$("#home"), chEl=$("#ch1"), first=true;
+
+    var pn=$("#"+P+"printNotes"), pnb=$("#"+P+"pnBody");
+    return {root:root,setOpen:setOpen,prep:function(ttl){pnb.innerHTML=ed.innerHTML;pn.classList.toggle("has",ed.innerText.trim().length>0);document.title=ttl}};
+  }
+
+  /* ---- chapters and router ---- */
+  var ch1=initCh($("#ch1"),"","whistler-ch1-notes-v1",'<h3>Predictions for Part 2</h3><ul><li>What did the mother do that was heroic?</li><li>Will Daphne tell her mother about Eddie?</li><li>What will Eddie do next?</li></ul>'), ch2=initCh($("#ch2"),"c2-","whistler-ch2-notes-v1",'<h3>Predictions for Chapter 3</h3><ul><li>What will Eddie and Daphne do after the party?</li><li>What will Daphne say to her mother about Eddie?</li><li>Will Daphne ever fly with Jonathan?</li></ul>'), chs=[ch1,ch2];
+  var TITLES=[ "Whistler - Chapter 1 slides and notes","Whistler - Chapter 2 slides and notes" ], origTitle=document.title;
+  var homeEl=$("#home"), first=true, curKey="home";
+  window.addEventListener("beforeprint",function(){
+    origTitle=document.title;
+    if(!homeEl.hidden){buildWall();document.title="Whistler - post-it mural";return}
+    chs.forEach(function(c,i){if(!c.root.hidden)c.prep(TITLES[i])});
+  });
+  window.addEventListener("afterprint",function(){document.title=origTitle});
   function route(){
-    var h=location.hash, toHome=(h===""||h==="#"||h==="#home"), wasHome=!homeEl.hidden;
-    homeEl.hidden=!toHome;chEl.hidden=toHome;
-    if(toHome){setOpen(false);layoutPits()}
-    if(first||toHome!==wasHome){window.scrollTo(0,0)}
-    first=false;
+    var h=location.hash, toHome=(h===""||h==="#"||h==="#home");
+    var key=toHome?"home":((h.indexOf("#chapter2")===0||h.indexOf("#c2-")===0)?"ch2":"ch1");
+    homeEl.hidden=key!=="home";ch1.root.hidden=key!=="ch1";ch2.root.hidden=key!=="ch2";
+    if(key!==curKey){chs.forEach(function(c){c.setOpen(false)})}
+    if(key==="home"){layoutPits()}
+    if(first||key!==curKey){window.scrollTo(0,0)}
+    curKey=key;first=false;
   }
   window.addEventListener("hashchange",route);
 
